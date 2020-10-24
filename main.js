@@ -7,7 +7,6 @@ require('prototype.link');
 // Upon load or global reset, these loops check for essential memory objects
 // and creates blank entries if they don't exist.
 if (Memory.tickTock == undefined) { Memory.tickTock = 0;}
-const tick = Memory.tickTock;
 
 for (let room in Game.rooms) {
     if (Game.rooms[room].memory.logisticsEnabled == undefined) {
@@ -68,8 +67,6 @@ module.exports.loop = function () {
     // run the spawns
     for (let spawnName in Game.spawns) { 
         Game.spawns[spawnName].spawnCreepsIfNecessary();
-    }
-    for (let spawnName in Game.spawns) {
         Game.spawns[spawnName].headsUpDisplay(tick);
     }
 };

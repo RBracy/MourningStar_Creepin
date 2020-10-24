@@ -67,6 +67,6 @@ module.exports.loop = function () {
     // run the spawns
     for (let spawnName in Game.spawns) { 
         Game.spawns[spawnName].spawnCreepsIfNecessary();
-        Game.spawns[spawnName].headsUpDisplay(tick);
+        Game.spawns[spawnName].headsUpDisplay();
     }
 };

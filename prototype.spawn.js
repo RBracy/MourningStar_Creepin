@@ -22,7 +22,6 @@ StructureSpawn.prototype.headsUpDisplay =
                 this.room.energyCapacityAvailable + '} *****');
             console.log('***** {Storage: ' + storage.store.getUsedCapacity(RESOURCE_ENERGY) + 
                 '/' + storage.store.getFreeCapacity() + '} *****');
-            Memory.tickTock = 0;
         }
     };
 

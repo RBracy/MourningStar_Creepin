@@ -7,6 +7,7 @@ require('prototype.link');
 // Upon load or global reset, these loops check for essential memory objects
 // and creates blank entries if they don't exist.
 if (Memory.tickTock == undefined) { Memory.tickTock = 0;}
+const tickTock = Memory.tickTock;
 
 for (let room in Game.rooms) {
     if (Game.rooms[room].memory.logisticsEnabled == undefined) {
@@ -36,7 +37,10 @@ for (let spawnName in Game.spawns) {
 }
 
 module.exports.loop = function () {
+
+    if (tickTock < 5) {
     Memory.tickTock = Memory.tickTock + 1;
+    }
 
     // clear the memory of dead creeps
     for (let name in Memory.creeps) {
@@ -69,4 +73,6 @@ module.exports.loop = function () {
         Game.spawns[spawnName].spawnCreepsIfNecessary();
         Game.spawns[spawnName].headsUpDisplay();
     }
+
+    if (tickTock >= 5) {Memory.tickTock = 0;}
 };

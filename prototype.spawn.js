@@ -36,9 +36,9 @@ StructureSpawn.prototype.headsUpDisplay =
 
             console.log('* Energy:');
             console.log(this.energyAvailable + '/' + this.energyCapacityAvailable);
-            tick = 0;
+            Memory.tickTock = 0;
         }
-        else {tick++;}
+        else {Memory.tickTock++;}
     };
 
 // create a new function for StructureSpawn

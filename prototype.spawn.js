@@ -22,9 +22,9 @@ StructureSpawn.prototype.headsUpDisplay =
                 this.room.energyCapacityAvailable + '} *****');
             console.log('***** {Storage: ' + storage.store.getUsedCapacity(RESOURCE_ENERGY) + 
                 '/' + storage.store.getFreeCapacity() + '} *****');
-            return tick = 0;
+            Memory.tickTock = 0;
         }
-        else {return tick++;}
+        else {Memory.tickTock++;}
     };
 
 // create a new function for StructureSpawn

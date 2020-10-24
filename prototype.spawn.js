@@ -6,7 +6,7 @@ var listOfRoles = [
     'harvester',
     'invader',
     'logistics',
-    'longDistanceHavester',
+    'longDistanceHarvester',
     'lorry',
     'miner',
     'remoteConstructor',
@@ -159,7 +159,7 @@ StructureSpawn.prototype.spawnCreepsIfNecessary =
 								numberOfClaimHolders[roomName] = _.sum(Game.creeps, (c) =>
                                         c.memory.role == 'claimHolder' && 
                                         c.memory.target == roomName && 
-                                        c.memory.home == room);
+                                        c.memory.home == room.name);
 
 								if (numberOfClaimHolders[roomName] < this.memory.minClaimHolders[roomName]) {
 										name = this.createClaimHolder(roomName);
@@ -175,7 +175,7 @@ StructureSpawn.prototype.spawnCreepsIfNecessary =
 								numberOfRemoteConstructors[roomName] = _.sum(Game.creeps, (c) =>
                                         c.memory.role == 'remoteConstructor' && 
                                         c.memory.target == roomName && 
-                                        c.memory.home == room);
+                                        c.memory.home == room.name);
 
 								if (numberOfRemoteConstructors[roomName] < this.memory.minRemoteConstructors[roomName]) {
 										name = this.createRemoteConstructor(roomName);
@@ -191,7 +191,7 @@ StructureSpawn.prototype.spawnCreepsIfNecessary =
 								numberOfInvaders[roomName] = _.sum(Game.creeps, (c) =>
                                         c.memory.role == 'invader' && 
                                         c.memory.target == roomName && 
-                                        c.memory.home == room)
+                                        c.memory.home == room.name)
 
 								if (numberOfInvaders[roomName] < this.memory.minInvaders[roomName]) {
 										name = this.createInvader(roomName);
@@ -208,7 +208,7 @@ StructureSpawn.prototype.spawnCreepsIfNecessary =
                 numberOfLongDistanceHarvesters[roomName] = _.sum(Game.creeps, (c) =>
                     c.memory.role == 'longDistanceHarvester' && 
                     c.memory.target == roomName && 
-                    c.memory.home == room);
+                    c.memory.home == room.name);
 
                 if (numberOfLongDistanceHarvesters[roomName] < this.memory.minLongDistanceHarvesters[roomName]) {
                     name = this.createLongDistanceHarvester(maxEnergy, 2, this.room.name, roomName);

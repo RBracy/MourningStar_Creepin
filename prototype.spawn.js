@@ -1,4 +1,33 @@
-var listOfRoles = ['harvester', 'lorry', 'scavenger', 'schlepper', 'claimer', 'claimHolder', 'upgrader', 'repairer', 'builder', 'wallRepairer', 'remoteConstructor'];
+//var listOfRoles = ['harvester', 'lorry', 'scavenger', 'schlepper', 'claimer', 'claimHolder', 'upgrader', 'repairer', 'builder', 'wallRepairer', 'remoteConstructor'];
+var listOfRoles = {
+    builder: 'builder',
+    claimer: 'claimer',
+    claimHolder: 'claimHolder',
+    defender: 'defender',
+    harvester: 'harvester',
+    invader: 'invader',
+    logistics: 'logistics',
+    longDistanceHarvester: 'longDistanceHavester',
+    lorry: 'lorry',
+    miner: 'miner',
+    remoteConstructor: 'remoteConstructor',
+    repairer: 'repairer',
+    scavenger: 'scavenger',
+    schlepper: 'schlepper',
+    upgrader: 'upgrader',
+    wallRepairer: 'wallRepairer'
+};
+
+// a "Heads-up-display" that will give a readout of important stats, every 6 ticks (30s)
+StructureSpawn.prototype.headsUpDisplay =
+    function () {
+        if (Game.memory.tick == 5) {
+            for (let role of listOfRoles) {
+                console.log(this.name + ': ' + role + ": " + numberOfCreeps[role]);
+            }
+            Game.memory.tick = 0;
+        }
+    };
 
 // create a new function for StructureSpawn
 StructureSpawn.prototype.spawnCreepsIfNecessary =
@@ -127,7 +156,9 @@ StructureSpawn.prototype.spawnCreepsIfNecessary =
 						// count the number of Claim Holders
 						for (let roomName in this.memory.minClaimHolders) {
 								numberOfClaimHolders[roomName] = _.sum(Game.creeps, (c) =>
-										c.memory.role == 'claimHolder' && c.memory.target == roomName)
+                                        c.memory.role == 'claimHolder' && 
+                                        c.memory.target == roomName && 
+                                        c.memory.home == room);
 
 								if (numberOfClaimHolders[roomName] < this.memory.minClaimHolders[roomName]) {
 										name = this.createClaimHolder(roomName);
@@ -141,7 +172,9 @@ StructureSpawn.prototype.spawnCreepsIfNecessary =
 						// count the number of remote constructors
 						for (let roomName in this.memory.minRemoteConstructors) {
 								numberOfRemoteConstructors[roomName] = _.sum(Game.creeps, (c) =>
-										c.memory.role == 'remoteConstructor' && c.memory.target == roomName)
+                                        c.memory.role == 'remoteConstructor' && 
+                                        c.memory.target == roomName && 
+                                        c.memory.home == room);
 
 								if (numberOfRemoteConstructors[roomName] < this.memory.minRemoteConstructors[roomName]) {
 										name = this.createRemoteConstructor(roomName);
@@ -155,7 +188,9 @@ StructureSpawn.prototype.spawnCreepsIfNecessary =
 						// count the number of invaders
 						for (let roomName in this.memory.minInvaders) {
 								numberOfInvaders[roomName] = _.sum(Game.creeps, (c) =>
-										c.memory.role == 'invader' && c.memory.target == roomName)
+                                        c.memory.role == 'invader' && 
+                                        c.memory.target == roomName && 
+                                        c.memory.home == room)
 
 								if (numberOfInvaders[roomName] < this.memory.minInvaders[roomName]) {
 										name = this.createInvader(roomName);
@@ -170,7 +205,9 @@ StructureSpawn.prototype.spawnCreepsIfNecessary =
             // count the number of long distance harvesters globally
             for (let roomName in this.memory.minLongDistanceHarvesters) {
                 numberOfLongDistanceHarvesters[roomName] = _.sum(Game.creeps, (c) =>
-                    c.memory.role == 'longDistanceHarvester' && c.memory.target == roomName)
+                    c.memory.role == 'longDistanceHarvester' && 
+                    c.memory.target == roomName && 
+                    c.memory.home == room);
 
                 if (numberOfLongDistanceHarvesters[roomName] < this.memory.minLongDistanceHarvesters[roomName]) {
                     name = this.createLongDistanceHarvester(maxEnergy, 2, this.room.name, roomName);
@@ -178,6 +215,7 @@ StructureSpawn.prototype.spawnCreepsIfNecessary =
             }
         }
 
+/*
         // print name to console if spawning was a success
         if (name != undefined && _.isString(name)) {
             console.log(this.name + " spawned new creep: " + name + " (" + Game.creeps[name].memory.role + ")");
@@ -191,6 +229,7 @@ StructureSpawn.prototype.spawnCreepsIfNecessary =
                     console.log("ClaimHolder" + roomName + ": " + numberOfClaimHolders[roomName]);
             }
         }
+*/
     };
 
 // create a new function for StructureSpawn
@@ -333,5 +372,6 @@ StructureSpawn.prototype.createScavenger =
             body.push(MOVE);
         }
 
-        return this.spawnCreep(body, 'scavver_' + Game.time, { memory: { role: 'scavenger', working: false, home: this.room.name } });
+        return this.spawnCreep(body, 'scavver_' + Game.time, { memory: 
+            { role: 'scavenger', working: false, home: this.room.name } });
     };

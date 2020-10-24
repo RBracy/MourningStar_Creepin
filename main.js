@@ -36,7 +36,7 @@ for (let spawnName in Game.spawns) {
 }
 
 module.exports.loop = function () {
-    const tickTock = Memory.tickTock;
+    var tickTock = Memory.tickTock;
     if (tickTock < 5) {
         tickTock++;
     }

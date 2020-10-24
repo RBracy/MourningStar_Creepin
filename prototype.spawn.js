@@ -1,18 +1,18 @@
 var listOfRoles = [
     'builder',
-    'claimer',
-    'claimHolder',
+//    'claimer',
+//    'claimHolder',
     'defender',
     'harvester',
-    'invader',
+//    'invader',
     'logistics',
-    'longDistanceHarvester',
+//    'longDistanceHarvester',
     'lorry',
     'miner',
-    'remoteConstructor',
+//    'remoteConstructor',
     'repairer',
     'scavenger',
-    'schlepper',
+//    'schlepper',
     'upgrader',
     'wallRepairer'
 ];
@@ -21,6 +21,7 @@ var listOfRoles = [
 StructureSpawn.prototype.headsUpDisplay =
     function (tick) {
         if (tick >= 5) {
+    /*       
             let numberOfCreeps = {};
             let creepsInRoom = (_.filter(Game.creeps, (c) => c.memory.home == this.room.name));
 
@@ -33,9 +34,14 @@ StructureSpawn.prototype.headsUpDisplay =
             for (let role of listOfRoles) {
                 console.log(this.name + ': ' + role + ": " + numberOfCreeps[role]);
             }
-
-            console.log('* Energy:');
-            console.log(this.room.energyAvailable + '/' + this.room.energyCapacityAvailable);
+    */
+            let storage = this.room.storage;
+            console.log('***** {' + this.name + '} *****');
+            console.log('***** {Energy: Avail / Max *****' );
+            console.log('***** {Spawns: ' + this.room.energyAvailable + '/' + 
+                this.room.energyCapacityAvailable + '} *****');
+            console.log('***** {Storage: ' + storage.store.getUsedCapacity(RESOURCE_ENERGY) + 
+                '/' + storage.store.getCapacity() + '} *****');
             tick = 0;
         }
         else {tick++;}
@@ -46,9 +52,9 @@ StructureSpawn.prototype.spawnCreepsIfNecessary =
     function () {
         /** @type {Room} */
         let room = this.room;
-        // find all creeps in room
+        // find all creeps that "belong to" this room
         /** @type {Array.<Creep>} */
-        let creepsInRoom = room.find(FIND_MY_CREEPS);
+        let creepsInRoom = (_.filter(Game.creeps, (c) => c.memory.home == this.room.name));
 
         // count the number of creeps alive for each role in this room
         // _.sum will count the number of properties in Game.creeps filtered by the
@@ -213,6 +219,26 @@ StructureSpawn.prototype.spawnCreepsIfNecessary =
                 if (numberOfLongDistanceHarvesters[roomName] < this.memory.minLongDistanceHarvesters[roomName]) {
                     name = this.createLongDistanceHarvester(maxEnergy, 2, this.room.name, roomName);
                 }
+            }
+        }
+
+        // print name to console if spawning was a success
+        if (name != undefined && _.isString(name)) {
+            console.log(this.name + " spawned new creep: " + name + " (" + Game.creeps[name].memory.role + ")");
+            for (let role of listOfRoles) {
+                console.log(role + ": " + numberOfCreeps[role]);
+            }
+            for (let roomName in numberOfLongDistanceHarvesters) {
+                console.log("LongDistanceHarvester" + roomName + ": " + numberOfLongDistanceHarvesters[roomName]);
+            }
+            for (let roomName in numberOfClaimHolders) {
+                    console.log("ClaimHolder" + roomName + ": " + numberOfClaimHolders[roomName]);
+            }
+            for (let roomName in numberOfRemoteConstructors) {
+                console.log("RemoteConstructor" + roomName + ": " + numberOfRemoteConstructors[roomName]);
+            }
+            for (let roomName in numberOfInvaders) {
+                console.log("Invader" + roomName + ": " + numberOfInvaders[roomName]);
             }
         }
     };

@@ -19,13 +19,24 @@ var listOfRoles = [
 
 // a "Heads-up-display" that will give a readout of important stats, every 6 ticks (30s)
 StructureSpawn.prototype.headsUpDisplay =
-    function () {
-        let tick = this.memory.tickTock;
+    function (tick) {
         if (tick == 5) {
+            let numberOfCreeps = {};
+            let creepsInRoom = _.filter(Game.creeps, (c) => c.memory.home == this.room.name);
+
+            for (let role of listOfRoles) {
+                numberOfCreeps[role] = _.sum(creepsInRoom, (c) => c.memory.role == role);
+            }
+            
+            console.log('***** {' + this.name + '} *****');
+            console.log('* Creeps:');
             for (let role of listOfRoles) {
                 console.log(this.name + ': ' + role + ": " + numberOfCreeps[role]);
             }
-            this.memory.tickTock = 0;
+
+            console.log('* Energy:');
+            console.log(this.energyAvailable + '/' + this.energyCapacityAvailable);
+            tick = 0;
         }
         else {tick++;}
     };
@@ -109,17 +120,6 @@ StructureSpawn.prototype.spawnCreepsIfNecessary =
                 }
             }
         }
-            
-    /*    
-        // if a link system has been established, and there is a target link
-            // check for a schlepper, if one isn't found, spawn one.
-            if (targetLink != undefined) {
-                if (!_.some(creepsInRoom, c => c.memory.role == 'schlepper')) {
-                    name = this.createSchlepper();
-                }
-            } 
-    */
-   
         // if none of the above caused a spawn command check for other roles
         if (name == undefined) {
             for (let role of listOfRoles) {
@@ -215,22 +215,6 @@ StructureSpawn.prototype.spawnCreepsIfNecessary =
                 }
             }
         }
-
-/*
-        // print name to console if spawning was a success
-        if (name != undefined && _.isString(name)) {
-            console.log(this.name + " spawned new creep: " + name + " (" + Game.creeps[name].memory.role + ")");
-            for (let role of listOfRoles) {
-                console.log(role + ": " + numberOfCreeps[role]);
-            }
-            for (let roomName in numberOfLongDistanceHarvesters) {
-                console.log("LongDistanceHarvester" + roomName + ": " + numberOfLongDistanceHarvesters[roomName]);
-            }
-            for (let roomName in numberOfClaimHolders) {
-                    console.log("ClaimHolder" + roomName + ": " + numberOfClaimHolders[roomName]);
-            }
-        }
-*/
     };
 
 // create a new function for StructureSpawn

@@ -6,6 +6,9 @@ require('prototype.link');
 
 // Upon load or global reset, these loops check for essential memory objects
 // and creates blank entries if they don't exist.
+if (Memory.tickTock == undefined) { Memory.tickTock = 0}
+var tick = Memory.tickTock;
+
 for (let room in Game.rooms) {
     if (Game.rooms[room].memory.logisticsEnabled == undefined) {
         Game.rooms[room].memory.logisticsEnabled = {};
@@ -30,9 +33,6 @@ for (let spawnName in Game.spawns) {
     }
     if (Game.spawns[spawnName].memory.minInvaders == undefined) {
         Game.spawns[spawnName].memory.minInvaders = {};
-    }
-    if (Game.spawns[spawnName].memory.tickTock == undefined) {
-        Game.spawns[spawnName].memory.tickTock = 0;
     }
 }
 
@@ -64,5 +64,8 @@ module.exports.loop = function () {
     for (let tower of towers) { tower.defend(); }
 
     // run the spawns
-    for (let spawnName in Game.spawns) { Game.spawns[spawnName].spawnCreepsIfNecessary(); }
+    for (let spawnName in Game.spawns) { 
+        Game.spawns[spawnName].spawnCreepsIfNecessary();
+        Game.spawns[spawnName].headsUpDisplay(tick);
+    }
 };

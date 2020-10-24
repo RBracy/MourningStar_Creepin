@@ -20,9 +20,9 @@ var listOfRoles = [
 // a "Heads-up-display" that will give a readout of important stats, every 6 ticks (30s)
 StructureSpawn.prototype.headsUpDisplay =
     function (tick) {
-        if (tick == 5) {
+        if (tick >= 5) {
             let numberOfCreeps = {};
-            let creepsInRoom = _.filter(Game.creeps, (c) => c.memory.home == this.room.name);
+            let creepsInRoom = (_.filter(Game.creeps, (c) => c.memory.home == this.room.name));
 
             for (let role of listOfRoles) {
                 numberOfCreeps[role] = _.sum(creepsInRoom, (c) => c.memory.role == role);
@@ -35,10 +35,10 @@ StructureSpawn.prototype.headsUpDisplay =
             }
 
             console.log('* Energy:');
-            console.log(this.energyAvailable + '/' + this.energyCapacityAvailable);
-            Memory.tickTock = 0;
+            console.log(this.room.energyAvailable + '/' + this.room.energyCapacityAvailable);
+            tick = 0;
         }
-        else {Memory.tickTock++;}
+        else {tick++;}
     };
 
 // create a new function for StructureSpawn

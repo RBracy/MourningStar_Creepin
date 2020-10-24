@@ -6,7 +6,7 @@ require('prototype.link');
 
 // Upon load or global reset, these loops check for essential memory objects
 // and creates blank entries if they don't exist.
-if (Memory.tickTock == undefined) { Memory.tickTock = 0}
+if (Memory.tickTock == undefined) { Memory.tickTock = 0;}
 var tick = Memory.tickTock;
 
 for (let room in Game.rooms) {

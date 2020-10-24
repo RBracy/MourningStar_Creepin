@@ -21,12 +21,14 @@ var listOfRoles = {
 // a "Heads-up-display" that will give a readout of important stats, every 6 ticks (30s)
 StructureSpawn.prototype.headsUpDisplay =
     function () {
-        if (Game.memory.tick == 5) {
+        let tick = this.memory.tickTock;
+        if (tick == 5) {
             for (let role of listOfRoles) {
                 console.log(this.name + ': ' + role + ": " + numberOfCreeps[role]);
             }
-            Game.memory.tick = 0;
+            this.memory.tickTock = 0;
         }
+        else {tick++;}
     };
 
 // create a new function for StructureSpawn

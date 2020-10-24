@@ -6,10 +6,6 @@ require('prototype.link');
 
 // Upon load or global reset, these loops check for essential memory objects
 // and creates blank entries if they don't exist.
-if (Game.memory.tick == undefined) {
-    Game.memory.tick = 0;
-}
-
 for (let room in Game.rooms) {
     if (Game.rooms[room].memory.logisticsEnabled == undefined) {
         Game.rooms[room].memory.logisticsEnabled = {};
@@ -23,17 +19,20 @@ for (let spawnName in Game.spawns) {
     if (Game.spawns[spawnName].memory.minCreeps == undefined) {
         Game.spawns[spawnName].memory.minCreeps = { harvester: 0, lorry: 0, scavenger: 0, upgrader: 0, builder: 0, repairer: 0, wallRepairer: 0 };
     }
-    else if (Game.spawns[spawnName].memory.minLongDistanceHarvesters == undefined) {
+    if (Game.spawns[spawnName].memory.minLongDistanceHarvesters == undefined) {
         Game.spawns[spawnName].memory.minLongDistanceHarvesters = {};
     }
-    else if (Game.spawns[spawnName].memory.minClaimHolders == undefined) {
+    if (Game.spawns[spawnName].memory.minClaimHolders == undefined) {
         Game.spawns[spawnName].memory.minClaimHolders = {};
     }
-    else if (Game.spawns[spawnName].memory.minRemoteConstructors == undefined) {
+    if (Game.spawns[spawnName].memory.minRemoteConstructors == undefined) {
         Game.spawns[spawnName].memory.minRemoteConstructors = {};
     }
-    else if (Game.spawns[spawnName].memory.minInvaders == undefined) {
+    if (Game.spawns[spawnName].memory.minInvaders == undefined) {
         Game.spawns[spawnName].memory.minInvaders = {};
+    }
+    if (Game.spawns[spawnName].memory.tickTock == undefined) {
+        Game.spawns[spawnName].memory.tickTock = 0;
     }
 }
 
@@ -66,7 +65,4 @@ module.exports.loop = function () {
 
     // run the spawns
     for (let spawnName in Game.spawns) { Game.spawns[spawnName].spawnCreepsIfNecessary(); }
-
-    // ticker for timing how often to display the HUD
-    Game.memory.tick++;
 };

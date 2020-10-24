@@ -43,15 +43,15 @@ Creep.prototype.getEnergy =
             switch (this.room.memory.logisticsEnabled) {
                 case true:
                     container = this.pos.findClosestByRange(FIND_STRUCTURES, {
-                    filter: s => s.structureType == ((STRUCTURE_STORAGE || 
+                    filter: s => s.structureType == (STRUCTURE_STORAGE || 
                         s.structureType == STRUCTURE_LINK) && 
-                        s.store[RESOURCE_ENERGY] > 0)
+                        s.store.getUsedCapacity(RESOURCE_ENERGY) > 0
                     });
                     break;
                 default:
                     container = this.pos.findClosestByRange(FIND_STRUCTURES, {
                         filter: s => (s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE) &&
-                                     s.store[RESOURCE_ENERGY] > 0
+                                     s.store.getUsedCapacity(RESOURCE_ENERGY) > 0
                     });
                     break;
             }

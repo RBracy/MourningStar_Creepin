@@ -15,7 +15,6 @@ var listOfRoles = [
 StructureSpawn.prototype.headsUpDisplay =
     function (tickTock) {
         if (tickTock >= 5) {
-            console.clear;
             let storage = this.room.storage;
             console.log('***** {' + this.name + '} *****');
             console.log('***** {Energy: Avail / Max(Free) *****' );

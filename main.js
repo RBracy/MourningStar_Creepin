@@ -38,7 +38,7 @@ for (let spawnName in Game.spawns) {
 module.exports.loop = function () {
     const tickTock = Memory.tickTock;
     if (tickTock < 5) {
-    Memory.tickTock = Memory.tickTock + 1;
+        tickTock++;
     }
 
     // clear the memory of dead creeps
@@ -73,5 +73,5 @@ module.exports.loop = function () {
         Game.spawns[spawnName].headsUpDisplay(tickTock);
     }
 
-    if (tickTock >= 5) {Memory.tickTock = 0;}
+    if (tickTock >= 5) {tickTock = 0;}
 };

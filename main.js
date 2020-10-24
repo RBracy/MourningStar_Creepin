@@ -70,7 +70,7 @@ module.exports.loop = function () {
     // run the spawns
     for (let spawnName in Game.spawns) { 
         Game.spawns[spawnName].spawnCreepsIfNecessary();
-        Game.spawns[spawnName].headsUpDisplay();
+        Game.spawns[spawnName].headsUpDisplay(tickTock);
     }
 
     if (tickTock >= 5) {Memory.tickTock = 0;}

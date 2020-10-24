@@ -1,27 +1,20 @@
 var listOfRoles = [
     'builder',
-//    'claimer',
-//    'claimHolder',
     'defender',
     'harvester',
-//    'invader',
     'logistics',
-//    'longDistanceHarvester',
     'lorry',
     'miner',
-//    'remoteConstructor',
     'repairer',
     'scavenger',
-//    'schlepper',
     'upgrader',
     'wallRepairer'
 ];
 
 // a "Heads-up-display" that will give a readout of important stats, every 6 ticks (30s)
 StructureSpawn.prototype.headsUpDisplay =
-    function () {
-        let tick = Memory.tickTock;
-        if (tick >= 5) {
+    function (tick) {
+        if (tick == 5) {
             let storage = this.room.storage;
             console.log('***** {' + this.name + '} *****');
             console.log('***** {Energy: Avail / Max(Free) *****' );
@@ -29,9 +22,9 @@ StructureSpawn.prototype.headsUpDisplay =
                 this.room.energyCapacityAvailable + '} *****');
             console.log('***** {Storage: ' + storage.store.getUsedCapacity(RESOURCE_ENERGY) + 
                 '/' + storage.store.getFreeCapacity() + '} *****');
-            tick = 0;
+            return tick = 0;
         }
-        else {tick++;}
+        else {return tick++;}
     };
 
 // create a new function for StructureSpawn

@@ -1,22 +1,21 @@
-//var listOfRoles = ['harvester', 'lorry', 'scavenger', 'schlepper', 'claimer', 'claimHolder', 'upgrader', 'repairer', 'builder', 'wallRepairer', 'remoteConstructor'];
-var listOfRoles = {
-    builder: 'builder',
-    claimer: 'claimer',
-    claimHolder: 'claimHolder',
-    defender: 'defender',
-    harvester: 'harvester',
-    invader: 'invader',
-    logistics: 'logistics',
-    longDistanceHarvester: 'longDistanceHavester',
-    lorry: 'lorry',
-    miner: 'miner',
-    remoteConstructor: 'remoteConstructor',
-    repairer: 'repairer',
-    scavenger: 'scavenger',
-    schlepper: 'schlepper',
-    upgrader: 'upgrader',
-    wallRepairer: 'wallRepairer'
-};
+var listOfRoles = [
+    'builder',
+    'claimer',
+    'claimHolder',
+    'defender',
+    'harvester',
+    'invader',
+    'logistics',
+    'longDistanceHavester',
+    'lorry',
+    'miner',
+    'remoteConstructor',
+    'repairer',
+    'scavenger',
+    'schlepper',
+    'upgrader',
+    'wallRepairer'
+];
 
 // a "Heads-up-display" that will give a readout of important stats, every 6 ticks (30s)
 StructureSpawn.prototype.headsUpDisplay =

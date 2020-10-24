@@ -24,7 +24,6 @@ StructureSpawn.prototype.headsUpDisplay =
                 '/' + storage.store.getFreeCapacity() + '} *****');
             Memory.tickTock = 0;
         }
-        else {Memory.tickTock++;}
     };
 
 // create a new function for StructureSpawn

@@ -16,11 +16,8 @@ StructureSpawn.prototype.headsUpDisplay =
     function (tickTock) {
         if (tickTock >= 5) {
             let storage = this.room.storage;
-            console.log('***** {' + this.name + '} *****');
-            console.log('***** {Energy: Avail / Max(Free) *****' );
-            console.log('***** {Spawns: ' + this.room.energyAvailable + '/' + 
-                this.room.energyCapacityAvailable + '} *****');
-            console.log('***** {Storage: ' + storage.store.getUsedCapacity(RESOURCE_ENERGY) + 
+            console.log('***** {' + this.name + ': Energy: ' + this.room.energyAvailable + '/' + 
+                this.room.energyCapacityAvailable + ' | Storage: ' + storage.store.getUsedCapacity(RESOURCE_ENERGY) + 
                 '/' + storage.store.getFreeCapacity() + '} *****');
         }
     };
@@ -330,7 +327,7 @@ StructureSpawn.prototype.createMiner =
 //  enabled and there is no miner already assigned to the target room)
 StructureSpawn.prototype.createRemoteMiner =
     function (roomName) {
-        return this.spawnCreep([WORK, WORK, WORK, WORK, WORK, MOVE, MOVE], 'remoteMiner_' + Game.time,
+        return this.spawnCreep([WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE], 'remoteMiner_' + Game.time,
             { memory: { role: 'remoteMiner', target: roomName, home: this.room.name } });
     };
 

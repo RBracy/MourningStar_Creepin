@@ -215,7 +215,7 @@ StructureSpawn.prototype.spawnCreepsIfNecessary =
         }
 
         // print name to console if spawning was a success
-        if (name != undefined) {
+        if (name != undefined && _.isString(name)) {
             console.log(this.name + " spawned new creep: " + name + " (" + Game.creeps[name].memory.role + ")");
             for (let role of listOfRoles) {
                 console.log(role + ": " + numberOfCreeps[role]);

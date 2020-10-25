@@ -6,7 +6,7 @@ module.exports = {
 				filter: (s) => s.structureType == STRUCTURE_CONTAINER,
 			})[0];
 
-			if (container != undefined) {
+			if (container != undefined && source != undefined) {
 				if (creep.pos.isEqualTo(container.pos)) {
 					creep.harvest(source);
 				} else {

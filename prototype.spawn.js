@@ -374,7 +374,7 @@ StructureSpawn.prototype.createLongDistanceHarvester = function (
 // Claim Holder (For reserving controllers)
 StructureSpawn.prototype.createClaimHolder = function (target) {
 	return this.spawnCreep(
-		[CLAIM, CLAIM, MOVE, MOVE],
+		[CLAIM, CLAIM, MOVE, MOVE, MOVE, MOVE],
 		'claimHolder' + target + Game.time,
 		{ memory: { role: 'claimHolder', target: target, home: this.room.name } }
 	);
@@ -392,18 +392,27 @@ StructureSpawn.prototype.createClaimer = function (target) {
 StructureSpawn.prototype.createInvader = function (target) {
 	return this.spawnCreep(
 		[
+			TOUGH,
 			MOVE,
+			TOUGH,
 			MOVE,
+			TOUGH,
 			MOVE,
+			TOUGH,
 			ATTACK,
 			ATTACK,
+			TOUGH,
+			ATTACK,
+			TOUGH,
 			ATTACK,
 			ATTACK,
-			ATTACK,
-			ATTACK,
+			TOUGH,
 			MOVE,
+			TOUGH,
 			MOVE,
+			TOUGH,
 			MOVE,
+			TOUGH,
 		],
 		'invader' + target + '_' + Game.time,
 		{ memory: { role: 'invader', target: target, home: this.room.name } }
@@ -501,6 +510,8 @@ StructureSpawn.prototype.createLogistics = function (sourceId) {
 
 // Create Schlepper (Literally stands between the Target Link and room storage
 //  to transfer energy from link to storage as the long dist. harvesters drop it off)
+//Mostly deprecated as a standalone creep, but kept as the fallback role for
+// the scavenger role
 StructureSpawn.prototype.createSchlepper = function () {
 	return this.spawnCreep([MOVE, CARRY], 'schlepper_' + Game.time, {
 		memory: { role: 'schlepper', working: false, home: this.room.name },

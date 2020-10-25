@@ -45,10 +45,6 @@ StructureSpawn.prototype.spawnCreepsIfNecessary =
         let maxEnergy = room.energyCapacityAvailable;
         let name = undefined;
 
-        let targetLink = this.pos.findClosestByRange(FIND_STRUCTURES, {
-            filter: (link) => link.structureType == STRUCTURE_LINK && link.memory.target == true
-        });
-
         // if no harvesters are left AND either no miners or no lorries are left
         //  create a backup creep
         if (numberOfCreeps['harvester'] == 0 && numberOfCreeps['lorry'] == 0) {
@@ -135,64 +131,82 @@ StructureSpawn.prototype.spawnCreepsIfNecessary =
                 }
             }
         }
-				// Next we'll see if there are any reserve orders
-				let numberOfClaimHolders = {};
-				if (name == undefined) {
-						// count the number of Claim Holders
-						for (let roomName in this.memory.minClaimHolders) {
-								numberOfClaimHolders[roomName] = _.sum(Game.creeps, (c) =>
-                                        c.memory.role == 'claimHolder' && 
-                                        c.memory.target == roomName && 
-                                        c.memory.home == room.name);
 
-								if (numberOfClaimHolders[roomName] < this.memory.minClaimHolders[roomName]) {
-										name = this.createClaimHolder(roomName);
-								}
-						}
-				}
+        // Next we'll see if there are any reserve orders
+        let numberOfClaimHolders = {};
+        if (name == undefined) {
+                // count the number of Claim Holders
+                for (let roomName in this.memory.minClaimHolders) {
+                        numberOfClaimHolders[roomName] = _.sum(Game.creeps, (c) =>
+                                c.memory.role == 'claimHolder' && 
+                                c.memory.target == roomName && 
+                                c.memory.home == room.name);
 
-				// Next we'll see if there are any remote construction orders
-				let numberOfRemoteConstructors = {};
-				if (name == undefined) {
-						// count the number of remote constructors
-						for (let roomName in this.memory.minRemoteConstructors) {
-								numberOfRemoteConstructors[roomName] = _.sum(Game.creeps, (c) =>
-                                        c.memory.role == 'remoteConstructor' && 
-                                        c.memory.target == roomName && 
-                                        c.memory.home == room.name);
+                        if (numberOfClaimHolders[roomName] < this.memory.minClaimHolders[roomName]) {
+                                name = this.createClaimHolder(roomName);
+                        }
+                }
+        }
 
-								if (numberOfRemoteConstructors[roomName] < this.memory.minRemoteConstructors[roomName]) {
-										name = this.createRemoteConstructor(roomName);
-								}
-						}
-				}
+        // Next we'll see if there are any remote construction orders
+        let numberOfRemoteConstructors = {};
+        if (name == undefined) {
+                // count the number of remote constructors
+                for (let roomName in this.memory.minRemoteConstructors) {
+                        numberOfRemoteConstructors[roomName] = _.sum(Game.creeps, (c) =>
+                                c.memory.role == 'remoteConstructor' && 
+                                c.memory.target == roomName && 
+                                c.memory.home == room.name);
 
-				// Next we'll see if there are any invasion plans
-				let numberOfInvaders = {};
-				if (name == undefined) {
-						// count the number of invaders
-						for (let roomName in this.memory.minInvaders) {
-								numberOfInvaders[roomName] = _.sum(Game.creeps, (c) =>
-                                        c.memory.role == 'invader' && 
-                                        c.memory.target == roomName && 
-                                        c.memory.home == room.name)
+                        if (numberOfRemoteConstructors[roomName] < this.memory.minRemoteConstructors[roomName]) {
+                                name = this.createRemoteConstructor(roomName);
+                        }
+                }
+        }
 
-								if (numberOfInvaders[roomName] < this.memory.minInvaders[roomName]) {
-										name = this.createInvader(roomName);
-								}
-						}
-				}
+        // Next we'll see if there are any invasion plans
+        let numberOfInvaders = {};
+        if (name == undefined) {
+                // count the number of invaders
+                for (let roomName in this.memory.minInvaders) {
+                        numberOfInvaders[roomName] = _.sum(Game.creeps, (c) =>
+                                c.memory.role == 'invader' && 
+                                c.memory.target == roomName && 
+                                c.memory.home == room.name)
 
+                        if (numberOfInvaders[roomName] < this.memory.minInvaders[roomName]) {
+                                name = this.createInvader(roomName);
+                        }
+                }
+        }
+
+        // What about remote mining?
+        if (room.memory.remoteMiningEnabled == true) {
+            let numberOfLongDistanceHarvesters = {};
+            if (name == undefined) {
+                for (let roomName in this.memory.minLongDistanceHarvesters) {
+                    numberOfLongDistanceHarvesters[roomName] = _.sum(creepsInRoom, (c) =>
+                    c.memory.role == 'longDistanceHarvester' && 
+                    c.memory.target == roomName);
+
+                    if (numberOfLongDistanceHarvesters[roomName] > 0 && 
+                        (!_.some(Game.creeps, c => c.memory.role == 'remoteMiner' 
+                            && c.memory.target == roomName))) {
+                        name = this.createRemoteMiner(roomName);
+                        break;
+                    }
+                }
+            }
+        }
         // if none of the above caused a spawn command check for LongDistanceHarvesters
         /** @type {Object.<string, number>} */
         let numberOfLongDistanceHarvesters = {};
         if (name == undefined) {
             // count the number of long distance harvesters globally
             for (let roomName in this.memory.minLongDistanceHarvesters) {
-                numberOfLongDistanceHarvesters[roomName] = _.sum(Game.creeps, (c) =>
+                numberOfLongDistanceHarvesters[roomName] = _.sum(creepsInRoom, (c) =>
                     c.memory.role == 'longDistanceHarvester' && 
-                    c.memory.target == roomName && 
-                    c.memory.home == room.name);
+                    c.memory.target == roomName);
 
                 if (numberOfLongDistanceHarvesters[roomName] < this.memory.minLongDistanceHarvesters[roomName]) {
                     name = this.createLongDistanceHarvester(maxEnergy, 2, this.room.name, roomName);
@@ -310,6 +324,14 @@ StructureSpawn.prototype.createMiner =
     function (sourceId) {
         return this.spawnCreep([WORK, WORK, WORK, WORK, WORK, MOVE], 'miner_' + Game.time,
             { memory: { role: 'miner', sourceId: sourceId, home: this.room.name } });
+    };
+
+// Remote Miner (Spawns automatically if remote mining is
+//  enabled and there is no miner already assigned to the target room)
+StructureSpawn.prototype.createRemoteMiner =
+    function (roomName) {
+        return this.spawnCreep([WORK, WORK, WORK, WORK, WORK, MOVE, MOVE], 'remoteMiner_' + Game.time,
+            { memory: { role: 'remoteMiner', target: roomName, home: this.room.name } });
     };
 
 // Lorry (Transfers energy from room storage or containers 

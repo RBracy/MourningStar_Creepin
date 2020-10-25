@@ -14,7 +14,8 @@ var roles = {
     scavenger: require('role.scavenger'),
     defender: require('role.defender'),
 	invader: require('role.invader'),
-	remoteConstructor: require('role.remoteConstructor')
+    remoteConstructor: require('role.remoteConstructor'),
+    remoteMiner: require('role.remoteMiner')
 };
 
 Creep.prototype.runRole =

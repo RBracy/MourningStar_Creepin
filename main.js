@@ -10,10 +10,13 @@ if (Memory.tickTock == undefined) { Memory.tickTock = 0;}
 
 for (let room in Game.rooms) {
     if (Game.rooms[room].memory.logisticsEnabled == undefined) {
-        Game.rooms[room].memory.logisticsEnabled = {};
+        Game.rooms[room].memory.logisticsEnabled = false;
     }
     if (Game.rooms[room].memory.linksEnabled == undefined) {
-        Game.rooms[room].memory.linksEnabled = {};
+        Game.rooms[room].memory.linksEnabled = false;
+    }
+    if (Game.rooms[room].memory.remoteMiningEnabled == undefined) {
+        Game.rooms[room].memory.remoteMiningEnabled = false;
     }
 }
 

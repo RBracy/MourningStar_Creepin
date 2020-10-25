@@ -76,5 +76,6 @@ module.exports.loop = function () {
         Game.spawns[spawnName].headsUpDisplay(tickTock);
     }
 
-    if (tickTock >= 5) {Memory.tickTock = 0;}
+    if (tickTock >= 5) { Memory.tickTock = 0; }
+
 };

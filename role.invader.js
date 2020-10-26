@@ -22,7 +22,10 @@ module.exports = {
 			}
 		} else {
 			var exit = creep.room.findExitTo(creep.memory.target);
-			creep.moveTo(creep.pos.findClosestByRange(exit));
+			creep.moveTo(creep.pos.findClosestByRange(exit), {
+				plainCost: 1,
+				swampCost: 2,
+			});
 		}
 	},
 };

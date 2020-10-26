@@ -41,7 +41,10 @@ module.exports = {
 				// try to repair it, if it is out of range
 				if (creep.repair(structure) == ERR_NOT_IN_RANGE) {
 					// move towards it
-					creep.moveTo(structure);
+					creep.moveTo(structure, {
+						plainCost: 1,
+						swampCost: 2,
+					});
 				}
 			}
 			// if we can't fine one

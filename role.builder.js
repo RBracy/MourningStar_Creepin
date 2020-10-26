@@ -45,7 +45,10 @@ module.exports = {
 				// try to build, if the constructionSite is not in range
 				if (creep.build(constructionSite) == ERR_NOT_IN_RANGE) {
 					// move towards the constructionSite
-					creep.moveTo(constructionSite);
+					creep.moveTo(constructionSite, {
+						plainCost: 1,
+						swampCost: 2,
+					});
 				}
 			}
 			// if no constructionSite is found

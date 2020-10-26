@@ -10,14 +10,17 @@ module.exports = {
 				if (creep.pos.isEqualTo(container.pos)) {
 					creep.harvest(source);
 				} else {
-					creep.moveTo(container), { plainCost: 1, swampCost: 2 };
+					creep.moveTo(container, { plainCost: 1, swampCost: 2 });
 				}
 			} else {
 				creep.getEnergy(false, true);
 			}
 		} else {
 			let exit = creep.room.findExitTo(creep.memory.target);
-			creep.moveTo(creep.pos.findClosestByRange(exit));
+			creep.moveTo(creep.pos.findClosestByRange(exit), {
+				plainCost: 1,
+				swampCost: 2,
+			});
 		}
 	},
 };

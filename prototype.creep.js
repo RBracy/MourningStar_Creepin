@@ -59,14 +59,22 @@ Creep.prototype.getEnergy = function (useContainer, useSource) {
 
 		if (container != undefined) {
 			if (this.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-				this.moveTo(container);
+				this.moveTo(container, {
+					plainCost: 1,
+					swampCost: 2,
+					range: 1,
+				});
 			}
 		}
 	}
 	if (container == undefined && useSource) {
 		let source = this.pos.findClosestByRange(FIND_SOURCES_ACTIVE);
 		if (this.harvest(source) == ERR_NOT_IN_RANGE) {
-			this.moveTo(source);
+			this.moveTo(source, {
+				plainCost: 1,
+				swampCost: 2,
+				range: 1,
+			});
 		}
 	}
 };
@@ -85,19 +93,31 @@ Creep.prototype.getSalvage = function (creep) {
 	if (drops.length != 0) {
 		let drop = this.pos.findClosestByRange(drops);
 		if (this.pickup(drop) == ERR_NOT_IN_RANGE) {
-			this.moveTo(drop);
+			this.moveTo(drop, {
+				plainCost: 1,
+				swampCost: 2,
+				range: 1,
+			});
 			return 0;
 		}
 	} else if (tombstones.length != 0) {
 		let tomb = this.pos.findClosestByRange(tombstones);
 		if (this.withdraw(tomb, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-			this.moveTo(tomb);
+			this.moveTo(tomb, {
+				plainCost: 1,
+				swampCost: 2,
+				range: 1,
+			});
 			return 0;
 		}
 	} else if (ruins.length != 0) {
 		let ruin = this.pos.findClosestByRange(ruins);
 		if (this.withdraw(ruin, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-			this.moveTo(ruin);
+			this.moveTo(ruin, {
+				plainCost: 1,
+				swampCost: 2,
+				range: 1,
+			});
 			return 0;
 		}
 	} else {

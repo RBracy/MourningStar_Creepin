@@ -124,7 +124,7 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 		// What about remote mining?
 		if (room.memory.remoteMiningEnabled == true) {
 			if (name == undefined) {
-				for (let roomName of Game.rooms) {
+				for (let roomName in Game.rooms) {
 					let creepsAtTarget = _.filter(
 						Game.creeps,
 						(c) => c.memory.target == roomName || c.room == roomName

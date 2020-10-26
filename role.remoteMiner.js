@@ -15,13 +15,13 @@ module.exports = {
 						swampCost: 2,
 					});
 				}
-			} else {
-				let exit = creep.room.findExitTo(creep.memory.target);
-				creep.moveTo(creep.pos.findClosestByRange(exit), {
-					plainCost: 1,
-					swampCost: 2,
-				});
 			}
+		} else {
+			let exit = creep.room.findExitTo(creep.memory.target);
+			creep.moveTo(creep.pos.findClosestByRange(exit), {
+				plainCost: 1,
+				swampCost: 2,
+			});
 		}
 	},
 };

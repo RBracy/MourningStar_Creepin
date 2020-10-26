@@ -3,7 +3,9 @@ module.exports = {
 		if (creep.room.name == creep.memory.target) {
 			let source = creep.pos.findClosestByRange(FIND_SOURCES);
 			let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
-				filter: (s) => s.structureType == STRUCTURE_CONTAINER,
+				filter: (s) =>
+					s.structureType == STRUCTURE_CONTAINER &&
+					s.store.getFreeCapacity() > 0,
 			})[0];
 
 			if (container != undefined) {

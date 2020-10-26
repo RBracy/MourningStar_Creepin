@@ -127,7 +127,9 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 				for (let room in Game.rooms) {
 					let creepsAtTarget = _.filter(
 						Game.creeps,
-						(c) => c.memory.target == room.name || c.room.name == room.name
+						(c) =>
+							c.memory.target == Game.rooms[room].name ||
+							c.room.name == Game.rooms[room].name
 					);
 					sources = room.find(FIND_SOURCES);
 					for (let source of sources) {
@@ -145,7 +147,7 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 							});
 
 							if (containers.length > 0) {
-								name = this.createRemoteMiner(room.name, source.id);
+								name = this.createRemoteMiner(Game.rooms[room].name, source.id);
 								break;
 							}
 						}

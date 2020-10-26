@@ -30,7 +30,10 @@ module.exports = {
 				}
 			} else {
 				let exit = creep.room.findExitTo(creep.memory.home);
-				creep.moveTo(creep.pos.findClosestByRange(exit));
+				creep.moveTo(creep.pos.findClosestByRange(exit), {
+					plainCost: 1,
+					swampCost: 2,
+				});
 			}
 		} else {
 			if (creep.room.name == creep.memory.target) {

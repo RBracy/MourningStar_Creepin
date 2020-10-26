@@ -14,8 +14,10 @@ module.exports = {
 					if (creep.attack(target) == ERR_NOT_IN_RANGE) {
 						creep.moveTo(target);
 					}
-				} else if (creep.pos.getRangeTo(controller.pos) < 6) {
-					creep.moveTo(controller.pos);
+				} else {
+					if (creep.pos.getRangeTo(controller.pos) < 6) {
+						creep.moveTo(controller.pos);
+					}
 				}
 			}
 		} else {

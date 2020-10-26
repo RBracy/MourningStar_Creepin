@@ -227,28 +227,19 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 					(c) => c.memory.target == roomName
 				);
 				for (let source of sources) {
-					numberOfLongDistanceHarvesters[roomName] = _.sum(
-						creepsInRoom,
-						(c) =>
-							c.memory.role == 'longDistanceHarvester' &&
-							c.memory.target == roomName
-					);
-					if (numberOfLongDistanceHarvesters[roomName] > 0) {
-						if (
-							!_.some(
-								creepsAtTarget,
-								(c) =>
-									c.memory.role == 'miner' && c.memory.sourceID == source.id
-							)
-						) {
-							let containers = source.pos.findInRange(FIND_STRUCTURES, 1, {
-								filter: (s) => s.structureType == STRUCTURE_CONTAINER,
-							});
+					if (
+						!_.some(
+							creepsAtTarget,
+							(c) => c.memory.role == 'miner' && c.memory.sourceID == source.id
+						)
+					) {
+						let containers = source.pos.findInRange(FIND_STRUCTURES, 1, {
+							filter: (s) => s.structureType == STRUCTURE_CONTAINER,
+						});
 
-							if (containers.length > 0) {
-								name = this.createRemoteMiner(roomName, source.id);
-								break;
-							}
+						if (containers.length > 0) {
+							name = this.createRemoteMiner(roomName, source.id);
+							break;
 						}
 					}
 				}

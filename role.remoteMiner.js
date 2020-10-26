@@ -5,7 +5,7 @@ module.exports = {
 			let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
 				filter: (s) =>
 					s.structureType == STRUCTURE_CONTAINER &&
-					s.store.getFreeCapacity() > 0,
+					s.store.getFreeCapacity(RESOURCE_ENERGY) > 0,
 			})[0];
 
 			if (container != undefined) {

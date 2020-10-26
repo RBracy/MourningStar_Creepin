@@ -6,17 +6,17 @@ module.exports = {
 			let target = creep.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES);
 			if (target != undefined) {
 				if (creep.attack(target) == ERR_NOT_IN_RANGE) {
-					creep.moveTo(target);
+					creep.moveTo(target, { plainCost: 1, swampCost: 2, range: 1 });
 				}
 			} else {
 				target = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
 				if (target != undefined) {
 					if (creep.attack(target) == ERR_NOT_IN_RANGE) {
-						creep.moveTo(target);
+						creep.moveTo(target, { plainCost: 1, swampCost: 2, range: 1 });
 					}
 				} else {
 					if (creep.pos.getRangeTo(controller) > 6) {
-						creep.moveTo(controller);
+						creep.moveTo(controller), { plainCost: 1, swampCost: 2 };
 					}
 				}
 			}

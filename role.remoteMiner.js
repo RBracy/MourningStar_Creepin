@@ -10,7 +10,7 @@ module.exports = {
 				if (creep.pos.isEqualTo(container.pos)) {
 					creep.harvest(source);
 				} else {
-					creep.moveTo(container);
+					creep.moveTo(container), { plainCost: 1, swampCost: 2 };
 				}
 			} else {
 				creep.getEnergy(false, true);

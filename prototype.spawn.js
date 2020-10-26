@@ -229,7 +229,8 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 					if (
 						!_.some(
 							creepsAtTarget,
-							(c) => c.memory.role == 'miner' && c.memory.sourceID == source.id
+							(c) =>
+								c.memory.role == 'remoteMiner' && c.memory.sourceID == source.id
 						)
 					) {
 						let containers = source.pos.findInRange(FIND_STRUCTURES, 1, {

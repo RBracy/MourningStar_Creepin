@@ -217,9 +217,8 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 
 	// What about remote mining?
 	if (room.memory.remoteMiningEnabled == true) {
-		let numberOfLongDistanceHarvesters = {};
 		if (name == undefined) {
-			for (let roomName in _.filter(Game.rooms, (r) => {
+			for (let roomName of _.filter(Game.rooms, (r) => {
 				r.controller != undefined && r.controller.my != true;
 			})) {
 				let creepsAtTarget = _.filter(

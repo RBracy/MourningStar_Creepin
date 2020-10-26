@@ -47,12 +47,6 @@ for (let spawnName in Game.spawns) {
 		Game.spawns[spawnName].memory.minInvaders = {};
 	}
 }
-
-for (let name in Game.creeps) {
-	if (Game.creeps[name].memory.role == 'remoteMiner') {
-		Game.creeps[name].suicide;
-	}
-}
 module.exports.loop = function () {
 	const tickTock = Memory.tickTock;
 	if (tickTock < 5) {

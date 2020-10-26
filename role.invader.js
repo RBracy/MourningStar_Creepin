@@ -16,7 +16,7 @@ module.exports = {
 					}
 				} else {
 					if (creep.pos.getRangeTo(controller.pos) < 6) {
-						creep.moveTo(controller.pos);
+						creep.moveTo(controller);
 					}
 				}
 			}

@@ -1,12 +1,12 @@
 module.exports = {
 	run: function (creep) {
 		if (creep.room.name == creep.memory.target) {
-			let source = creep.pos.findClosestByRange(FIND_SOURCES_ACTIVE);
+			let source = creep.pos.findClosestByRange(FIND_SOURCES);
 			let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
 				filter: (s) => s.structureType == STRUCTURE_CONTAINER,
 			})[0];
 
-			if (container != undefined && source != undefined) {
+			if (container != undefined) {
 				if (creep.pos.isEqualTo(container.pos)) {
 					creep.harvest(source);
 				} else {

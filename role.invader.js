@@ -2,6 +2,7 @@ module.exports = {
 	/** @param {Creep} creep */
 	run: function (creep) {
 		if (creep.room.name == creep.memory.target) {
+			let controller = creep.room.controller;
 			let target = creep.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES);
 			if (target != undefined) {
 				if (creep.attack(target) == ERR_NOT_IN_RANGE) {
@@ -9,8 +10,12 @@ module.exports = {
 				}
 			} else {
 				target = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-				if (creep.attack(target) == ERR_NOT_IN_RANGE) {
-					creep.moveTo(target);
+				if (target != undefined) {
+					if (creep.attack(target) == ERR_NOT_IN_RANGE) {
+						creep.moveTo(target);
+					}
+				} else if (creep.pos.getRangeTo(controller.pos) < 6) {
+					creep.moveTo(controller.pos);
 				}
 			}
 		} else {

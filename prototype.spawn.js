@@ -121,6 +121,38 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 				}
 			}
 		}
+		// What about remote mining?
+		if (room.memory.remoteMiningEnabled == true) {
+			if (name == undefined) {
+				for (let roomName of _.filter(Game.rooms, (r) => {
+					r.controller != undefined && r.controller.my != true;
+				})) {
+					let creepsAtTarget = _.filter(
+						Game.creeps,
+						(c) => c.memory.target == roomName
+					);
+					for (let source of sources) {
+						if (
+							!_.some(
+								creepsAtTarget,
+								(c) =>
+									c.memory.role == 'remoteMiner' &&
+									c.memory.sourceID == source.id
+							)
+						) {
+							let containers = source.pos.findInRange(FIND_STRUCTURES, 1, {
+								filter: (s) => s.structureType == STRUCTURE_CONTAINER,
+							});
+
+							if (containers.length > 0) {
+								name = this.createRemoteMiner(roomName, source.id);
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	// if none of the above caused a spawn command check for other roles
 	if (name == undefined) {
@@ -215,37 +247,6 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 		}
 	}
 
-	// What about remote mining?
-	if (room.memory.remoteMiningEnabled == true) {
-		if (name == undefined) {
-			for (let roomName of _.filter(Game.rooms, (r) => {
-				r.controller != undefined && r.controller.my != true;
-			})) {
-				let creepsAtTarget = _.filter(
-					Game.creeps,
-					(c) => c.memory.target == roomName
-				);
-				for (let source of sources) {
-					if (
-						!_.some(
-							creepsAtTarget,
-							(c) =>
-								c.memory.role == 'remoteMiner' && c.memory.sourceID == source.id
-						)
-					) {
-						let containers = source.pos.findInRange(FIND_STRUCTURES, 1, {
-							filter: (s) => s.structureType == STRUCTURE_CONTAINER,
-						});
-
-						if (containers.length > 0) {
-							name = this.createRemoteMiner(roomName, source.id);
-							break;
-						}
-					}
-				}
-			}
-		}
-	}
 	// if none of the above caused a spawn command check for LongDistanceHarvesters
 	/** @type {Object.<string, number>} */
 	let numberOfLongDistanceHarvesters = {};

@@ -219,23 +219,38 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 	if (room.memory.remoteMiningEnabled == true) {
 		let numberOfLongDistanceHarvesters = {};
 		if (name == undefined) {
-			for (let roomName in this.memory.minLongDistanceHarvesters) {
-				numberOfLongDistanceHarvesters[roomName] = _.sum(
-					creepsInRoom,
-					(c) =>
-						c.memory.role == 'longDistanceHarvester' &&
-						c.memory.target == roomName
+			for (let roomName in _.filter(Game.rooms, (r) => {
+				r.controller != undefined && r.controller.my != true;
+			})) {
+				let creepsAtTarget = _.filter(
+					Game.creeps,
+					(c) => c.memory.target == roomName
 				);
+				for (let source of sources) {
+					numberOfLongDistanceHarvesters[roomName] = _.sum(
+						creepsInRoom,
+						(c) =>
+							c.memory.role == 'longDistanceHarvester' &&
+							c.memory.target == roomName
+					);
+					if (numberOfLongDistanceHarvesters[roomName] > 0) {
+						if (
+							!_.some(
+								creepsAtTarget,
+								(c) =>
+									c.memory.role == 'miner' && c.memory.sourceID == source.id
+							)
+						) {
+							let containers = source.pos.findInRange(FIND_STRUCTURES, 1, {
+								filter: (s) => s.structureType == STRUCTURE_CONTAINER,
+							});
 
-				if (
-					numberOfLongDistanceHarvesters[roomName] > 0 &&
-					!_.some(
-						Game.creeps,
-						(c) => c.memory.role == 'remoteMiner' && c.memory.target == roomName
-					)
-				) {
-					name = this.createRemoteMiner(roomName);
-					break;
+							if (containers.length > 0) {
+								name = this.createRemoteMiner(roomName, source.id);
+								break;
+							}
+						}
+					}
 				}
 			}
 		}
@@ -443,11 +458,18 @@ StructureSpawn.prototype.createMiner = function (sourceId) {
 
 // Remote Miner (Spawns automatically if remote mining is
 //  enabled and there is no miner already assigned to the target room)
-StructureSpawn.prototype.createRemoteMiner = function (roomName) {
+StructureSpawn.prototype.createRemoteMiner = function (roomName, sourceId) {
 	return this.spawnCreep(
 		[WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE],
 		'remoteMiner_' + Game.time,
-		{ memory: { role: 'remoteMiner', target: roomName, home: this.room.name } }
+		{
+			memory: {
+				role: 'remoteMiner',
+				target: roomName,
+				sourceId: sourceId,
+				home: this.room.name,
+			},
+		}
 	);
 };
 

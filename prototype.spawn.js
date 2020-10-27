@@ -42,12 +42,13 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 		(c) => c.memory.home == this.room.name
 	);
 	let transferOrder = room.memory.transferOrder;
-	let transferTarget = room.memory.transferOrder.target;
-	let transferQuantity = room.memory.transferOrder.quantity;
-
-	if (transferOrder != undefined && transferQuantity <= 0) {
-		delete room.memory.transferOrder;
-		this.memory.minCreeps.givers = 0;
+	if (transferOrder != undefined) {
+		var transferTarget = room.memory.transferOrder.target;
+		let transferQuantity = room.memory.transferOrder.quantity;
+		if (transferQuantity <= 0) {
+			delete room.memory.transferOrder;
+			this.memory.minCreeps.givers = 0;
+		}
 	}
 
 	// count the number of creeps alive for each role in this room

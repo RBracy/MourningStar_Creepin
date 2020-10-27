@@ -17,13 +17,13 @@ module.exports = {
 			creep.memory.working = true;
 		}
 
-		if (creep.memory.working == false) {
-			if (creep.getSalvage() == -1) {
-				roleHarvester.run(creep);
-			}
-		} else {
+		if (creep.memory.working == true) {
 			if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
 				creep.moveTo(target);
+			}
+		} else {
+			if (creep.getSalvage() == -1) {
+				roleHarvester.run(creep);
 			}
 		}
 	},

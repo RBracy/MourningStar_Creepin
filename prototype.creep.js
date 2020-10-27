@@ -11,6 +11,7 @@ var roles = {
 	lorry: require('role.lorry'),
 	schlepper: require('role.schlepper'),
 	logistics: require('role.logistics'),
+	giver: require('role.giver'),
 	scavenger: require('role.scavenger'),
 	defender: require('role.defender'),
 	invader: require('role.invader'),

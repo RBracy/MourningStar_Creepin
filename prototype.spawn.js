@@ -125,30 +125,37 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 		if (room.memory.remoteMiningEnabled == true) {
 			if (name == undefined) {
 				for (let room in Game.rooms) {
-					let creepsAtTarget = _.filter(
-						Game.creeps,
-						(c) =>
-							c.memory.target == Game.rooms[room].name ||
-							c.room.name == Game.rooms[room].name
-					);
-					sources = Game.rooms[room].find(FIND_SOURCES);
-					for (let source of sources) {
-						if (
-							!_.some(
-								creepsAtTarget,
-								(c) =>
-									(c.memory.role == 'remoteMiner' ||
-										c.memory.role == 'miner') &&
-									c.memory.sourceID == source.id
-							)
-						) {
-							let containers = source.pos.findInRange(FIND_STRUCTURES, 1, {
-								filter: (s) => s.structureType == STRUCTURE_CONTAINER,
-							});
+					if (
+						Game.rooms[room].controller != undefined &&
+						Game.rooms[room].controller.my != true
+					) {
+						let creepsAtTarget = _.filter(
+							Game.creeps,
+							(c) =>
+								c.memory.target == Game.rooms[room].name ||
+								c.room.name == Game.rooms[room].name
+						);
+						sources = Game.rooms[room].find(FIND_SOURCES);
+						for (let source of sources) {
+							if (
+								!_.some(
+									creepsAtTarget,
+									(c) =>
+										c.memory.role == 'remoteMiner' &&
+										c.memory.sourceID == source.id
+								)
+							) {
+								let containers = source.pos.findInRange(FIND_STRUCTURES, 1, {
+									filter: (s) => s.structureType == STRUCTURE_CONTAINER,
+								});
 
-							if (containers.length > 0) {
-								name = this.createRemoteMiner(Game.rooms[room].name, source.id);
-								break;
+								if (containers.length > 0) {
+									name = this.createRemoteMiner(
+										Game.rooms[room].name,
+										source.id
+									);
+									break;
+								}
 							}
 						}
 					}

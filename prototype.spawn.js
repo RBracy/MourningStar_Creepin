@@ -1,6 +1,7 @@
 var listOfRoles = [
 	'builder',
 	'defender',
+	'giver',
 	'harvester',
 	'logistics',
 	'lorry',
@@ -30,7 +31,6 @@ StructureSpawn.prototype.headsUpDisplay = function (tickTock) {
 		);
 	}
 };
-
 // create a new function for StructureSpawn
 StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 	/** @type {Room} */
@@ -41,6 +41,14 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 		Game.creeps,
 		(c) => c.memory.home == this.room.name
 	);
+	let transferOrder = room.memory.transferOrder;
+	let transferTarget = room.memory.transferOrder.target;
+	let transferQuantity = room.memory.transferOrder.quantity;
+
+	if (transferOrder != undefined && transferQuantity <= 0) {
+		delete room.memory.transferOrder;
+		this.memory.minCreeps.givers = 0;
+	}
 
 	// count the number of creeps alive for each role in this room
 	// _.sum will count the number of properties in Game.creeps filtered by the
@@ -182,6 +190,9 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 				}
 				if (role == 'scavenger') {
 					name = this.createScavenger(300);
+				}
+				if (role == 'giver' && transferOrder != undefined) {
+					name = this.createGiver(transferTarget);
 				} else {
 					name = this.createCustomCreep(maxEnergy, role);
 				}
@@ -278,7 +289,6 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 			}
 		}
 	}
-
 	// print name to console if spawning was a success
 	if (name != undefined && _.isString(name)) {
 		console.log(
@@ -547,4 +557,20 @@ StructureSpawn.prototype.createScavenger = function (energy) {
 	return this.spawnCreep(body, 'scavver_' + Game.time, {
 		memory: { role: 'scavenger', working: false, home: this.room.name },
 	});
+};
+
+// Giver (Transfers energy from one spawn/room to another)
+StructureSpawn.prototype.createGiver = function (transferTarget) {
+	return this.spawnCreep(
+		[MOVE, MOVE, CARRY, CARRY, CARRY, MOVE, CARRY, CARRY, CARRY, MOVE, MOVE],
+		'giver_' + Game.time,
+		{
+			memory: {
+				role: 'giver',
+				working: false,
+				home: this.room.name,
+				target: transferTarget,
+			},
+		}
+	);
 };

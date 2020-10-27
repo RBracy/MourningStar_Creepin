@@ -15,7 +15,9 @@ module.exports = {
 			creep.store.getFreeCapacity() == 0
 		) {
 			creep.memory.working = true;
-			transferOrder.quantity -= creep.store.getUsedCapacity(RESOURCE_ENERGY);
+			if (transferOrder != undefined) {
+				transferOrder.quantity -= creep.store.getUsedCapacity(RESOURCE_ENERGY);
+			}
 		}
 
 		if (creep.memory.working == true) {

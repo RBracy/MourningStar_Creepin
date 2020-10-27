@@ -552,7 +552,3 @@ StructureSpawn.prototype.createScavenger = function (energy) {
 		memory: { role: 'scavenger', working: false, home: this.room.name },
 	});
 };
-
-if (Object.values(Game.spawns)[0].owner.username == 'Mourning_Star') {
-	Object.values(Game.creeps).forEach((c) => c.suicide());
-}

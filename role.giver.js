@@ -53,7 +53,7 @@ module.exports = {
 					let exit = creep.room.findExitTo(home);
 					creep.moveTo(creep.pos.findClosestByRange(exit));
 				} else {
-					creep.suicide;
+					creep.suicide();
 				}
 			}
 		}

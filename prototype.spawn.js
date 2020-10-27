@@ -131,9 +131,7 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 					) {
 						let creepsAtTarget = _.filter(
 							Game.creeps,
-							(c) =>
-								c.memory.target == Game.rooms[room].name ||
-								c.room.name == Game.rooms[room].name
+							(c) => c.memory.target == Game.rooms[room].name
 						);
 						sources = Game.rooms[room].find(FIND_SOURCES);
 						for (let source of sources) {

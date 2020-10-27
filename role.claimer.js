@@ -6,10 +6,7 @@ module.exports = {
 			// find exit to target room
 			var exit = creep.room.findExitTo(creep.memory.target);
 			// move to exit
-			creep.moveTo(creep.pos.findClosestByRange(exit), {
-				plainCost: 1,
-				swampCost: 2,
-			});
+			creep.moveTo(creep.pos.findClosestByRange(exit));
 		} else {
 			switch (creep.claimController(creep.room.controller)) {
 				case ERR_NOT_IN_RANGE:

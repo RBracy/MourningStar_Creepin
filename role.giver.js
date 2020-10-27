@@ -36,10 +36,7 @@ module.exports = {
 				}
 			} else {
 				let exit = creep.room.findExitTo(target);
-				creep.moveTo(creep.pos.findClosestByRange(exit), {
-					plainCost: 1,
-					swampCost: 2,
-				});
+				creep.moveTo(creep.pos.findClosestByRange(exit));
 			}
 		} else {
 			if (creep.room.name == home) {
@@ -52,10 +49,7 @@ module.exports = {
 			} else {
 				if (transferOrder != undefined) {
 					let exit = creep.room.findExitTo(home);
-					creep.moveTo(creep.pos.findClosestByRange(exit), {
-						plainCost: 1,
-						swampCost: 2,
-					});
+					creep.moveTo(creep.pos.findClosestByRange(exit));
 				} else {
 					creep.suicide;
 				}

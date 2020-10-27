@@ -8,10 +8,7 @@ module.exports = {
 			roleBuilder.run(creep);
 		} else {
 			var exit = creep.room.findExitTo(creep.memory.target);
-			creep.moveTo(creep.pos.findClosestByRange(exit), {
-				plainCost: 1,
-				swampCost: 2,
-			});
+			creep.moveTo(creep.pos.findClosestByRange(exit));
 		}
 	},
 };

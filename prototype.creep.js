@@ -38,17 +38,30 @@ Creep.prototype.runRole = function () {
 Creep.prototype.getEnergy = function (useContainer, useSource) {
 	/** @type {StructureContainer} */
 	let container;
+	let storage = this.room.storage;
 	if (useContainer) {
 		container = this.pos.findClosestByRange(FIND_STRUCTURES, {
 			filter: (s) =>
 				((s.structureType == STRUCTURE_LINK && s.memory.target == true) ||
-					s.structureType == STRUCTURE_STORAGE ||
 					s.structureType == STRUCTURE_CONTAINER) &&
 				s.store.getUsedCapacity(RESOURCE_ENERGY) > 0,
 		});
-		if (container != undefined) {
+
+		if (
+			container != undefined &&
+			(storage == undefined ||
+				storage.store.getUsedCapacity(RESOURCE_ENERGY) == 0)
+		) {
 			if (this.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
 				this.moveTo(container);
+			}
+		} else if (
+			container != undefined &&
+			storage != undefined &&
+			storage.store.getUsedCapacity(RESOURCE_ENERGY) > 0
+		) {
+			if (this.withdraw(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+				this.moveTo(storage);
 			}
 		}
 	}

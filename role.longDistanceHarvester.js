@@ -18,12 +18,19 @@ module.exports = {
 					filter: (link) =>
 						link.structureType == STRUCTURE_LINK && link.memory.source == true,
 				});
+				let storage = creep.room.storage;
+
 				if (link != undefined) {
-					if (creep.transfer(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-						creep.moveTo(link);
+					if (creep.pos.getRangeTo(link) < creep.pos.getRangeTo(storage)) {
+						if (creep.transfer(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+							creep.moveTo(link);
+						}
+					} else {
+						if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+							creep.moveTo(storage);
+						}
 					}
 				} else {
-					let storage = creep.room.storage;
 					if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
 						creep.moveTo(storage);
 					}

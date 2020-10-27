@@ -39,25 +39,13 @@ Creep.prototype.getEnergy = function (useContainer, useSource) {
 	/** @type {StructureContainer} */
 	let container;
 	if (useContainer) {
-		switch (this.room.memory.logisticsEnabled) {
-			case true:
-				container = this.pos.findClosestByRange(FIND_STRUCTURES, {
-					filter: (s) =>
-						((s.structureType == STRUCTURE_LINK && s.memory.target == true) ||
-							s.structureType == STRUCTURE_STORAGE) &&
-						s.store.getUsedCapacity(RESOURCE_ENERGY) > 0,
-				});
-				break;
-			default:
-				container = this.pos.findClosestByRange(FIND_STRUCTURES, {
-					filter: (s) =>
-						(s.structureType == STRUCTURE_CONTAINER ||
-							s.structureType == STRUCTURE_STORAGE) &&
-						s.store.getUsedCapacity(RESOURCE_ENERGY) > 0,
-				});
-				break;
-		}
-
+		container = this.pos.findClosestByRange(FIND_STRUCTURES, {
+			filter: (s) =>
+				((s.structureType == STRUCTURE_LINK && s.memory.target == true) ||
+					s.structureType == STRUCTURE_STORAGE ||
+					s.structureType == STRUCTURE_CONTAINER) &&
+				s.store.getUsedCapacity(RESOURCE_ENERGY) > 0,
+		});
 		if (container != undefined) {
 			if (this.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
 				this.moveTo(container);

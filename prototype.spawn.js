@@ -129,16 +129,14 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 					for (let source of sources) {
 						let creepsAtTarget = _.filter(
 							Game.creeps,
-							(c) =>
-								c.memory.target == Game.rooms[room].name ||
-								c.room.name == Game.rooms[room].name
+							(c) => c.memory.target == Game.rooms[room].name
 						);
 						if (
 							!_.some(
 								creepsAtTarget,
 								(c) =>
 									c.memory.role == 'remoteMiner' &&
-									c.memory.sourceID == source.id
+									c.memory.sourceId == source.id
 							)
 						) {
 							let containers = source.pos.findInRange(FIND_STRUCTURES, 1, {

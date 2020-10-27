@@ -123,33 +123,36 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 		}
 		// What about remote mining?
 		if (room.memory.remoteMiningEnabled == true) {
-			for (let roomName in _.filter(
-				Game.rooms,
-				(r) => r.controller != undefined && r.controller.my != true
-			)) {
-				sources = Game.rooms[roomName].find(FIND_SOURCES);
-				for (let source of sources) {
-					let creepsAtTarget = _.filter(
-						Game.creeps,
-						(c) => c.memory.target == Game.rooms[roomName].name
-					);
-					if (
-						!_.some(
-							creepsAtTarget,
-							(c) =>
-								c.memory.role == 'remoteMiner' && c.memory.sourceId == source.id
-						)
-					) {
-						let containers = source.pos.findInRange(FIND_STRUCTURES, 1, {
-							filter: (s) => s.structureType == STRUCTURE_CONTAINER,
-						});
+			for (let roomName in Game.rooms) {
+				if (
+					Game.rooms[roomName].controller != undefined &&
+					Game.rooms[roomName].controller.my != true
+				) {
+					let sources = Game.rooms[roomName].find(FIND_SOURCES);
+					for (let source of sources) {
+						let creepsAtTarget = _.filter(
+							Game.creeps,
+							(c) => c.memory.target == Game.rooms[roomName].name
+						);
+						if (
+							!_.some(
+								creepsAtTarget,
+								(c) =>
+									c.memory.role == 'remoteMiner' &&
+									c.memory.sourceId == source.id
+							)
+						) {
+							let containers = source.pos.findInRange(FIND_STRUCTURES, 1, {
+								filter: (s) => s.structureType == STRUCTURE_CONTAINER,
+							});
 
-						if (containers.length > 0) {
-							name = this.createRemoteMiner(
-								Game.rooms[roomName].name,
-								source.id
-							);
-							break;
+							if (containers.length > 0) {
+								name = this.createRemoteMiner(
+									Game.rooms[roomName].name,
+									source.id
+								);
+								break;
+							}
 						}
 					}
 				}

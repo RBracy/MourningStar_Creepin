@@ -1,4 +1,4 @@
-const roleLorry = require('role.lorry');
+const roleHarvester = require('role.harvester');
 
 module.exports = {
 	// a function to run the logic for this role
@@ -19,7 +19,7 @@ module.exports = {
 
 		if (creep.memory.working == false) {
 			if (creep.getSalvage() == -1) {
-				roleLorry.run(creep);
+				roleHarvester.run(creep);
 			}
 		} else {
 			if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {

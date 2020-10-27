@@ -43,8 +43,8 @@ Creep.prototype.getEnergy = function (useContainer, useSource) {
 			case true:
 				container = this.pos.findClosestByRange(FIND_STRUCTURES, {
 					filter: (s) =>
-						(s.structureType == STRUCTURE_STORAGE ||
-							(s.structureType == STRUCTURE_LINK && s.memory.target == true)) &&
+						((s.structureType == STRUCTURE_LINK && s.memory.target == true) ||
+							s.structureType == STRUCTURE_STORAGE) &&
 						s.store.getUsedCapacity(RESOURCE_ENERGY) > 0,
 				});
 				break;
@@ -60,22 +60,14 @@ Creep.prototype.getEnergy = function (useContainer, useSource) {
 
 		if (container != undefined) {
 			if (this.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-				this.moveTo(container, {
-					plainCost: 1,
-					swampCost: 2,
-					range: 1,
-				});
+				this.moveTo(container);
 			}
 		}
 	}
 	if (container == undefined && useSource) {
 		let source = this.pos.findClosestByRange(FIND_SOURCES_ACTIVE);
 		if (this.harvest(source) == ERR_NOT_IN_RANGE) {
-			this.moveTo(source, {
-				plainCost: 1,
-				swampCost: 2,
-				range: 1,
-			});
+			this.moveTo(source);
 		}
 	}
 };
@@ -94,31 +86,19 @@ Creep.prototype.getSalvage = function (creep) {
 	if (drops.length != 0) {
 		let drop = this.pos.findClosestByRange(drops);
 		if (this.pickup(drop) == ERR_NOT_IN_RANGE) {
-			this.moveTo(drop, {
-				plainCost: 1,
-				swampCost: 2,
-				range: 1,
-			});
+			this.moveTo(drop);
 			return 0;
 		}
 	} else if (tombstones.length != 0) {
 		let tomb = this.pos.findClosestByRange(tombstones);
 		if (this.withdraw(tomb, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-			this.moveTo(tomb, {
-				plainCost: 1,
-				swampCost: 2,
-				range: 1,
-			});
+			this.moveTo(tomb);
 			return 0;
 		}
 	} else if (ruins.length != 0) {
 		let ruin = this.pos.findClosestByRange(ruins);
 		if (this.withdraw(ruin, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-			this.moveTo(ruin, {
-				plainCost: 1,
-				swampCost: 2,
-				range: 1,
-			});
+			this.moveTo(ruin);
 			return 0;
 		}
 	} else {

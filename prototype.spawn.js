@@ -125,7 +125,7 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 		if (name == undefined) {
 			for (let room in Game.rooms) {
 				if (Game.rooms[room].memory.remoteMiningEnabled == true) {
-					sources = Game.rooms[room].find(FIND_SOURCES);
+					let sources = Game.rooms[room].find(FIND_SOURCES);
 					for (let source of sources) {
 						let creepsAtTarget = _.filter(
 							Game.creeps,

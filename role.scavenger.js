@@ -1,4 +1,4 @@
-const roleHarvester = require('role.harvester');
+const roleSchlepper = require('role.schlepper');
 
 module.exports = {
 	// a function to run the logic for this role
@@ -23,7 +23,7 @@ module.exports = {
 			}
 		} else {
 			if (creep.getSalvage() == -1) {
-				roleHarvester.run(creep);
+				roleSchlepper.run(creep);
 			}
 		}
 	},

@@ -46,6 +46,9 @@ for (let spawnName in Game.spawns) {
 	if (Game.spawns[spawnName].memory.minInvaders == undefined) {
 		Game.spawns[spawnName].memory.minInvaders = {};
 	}
+	if (Game.spawns[spawnName].memory.enableHUD == undefined) {
+		Game.spawns[spawnName].memory.enableHUD = false;
+	}
 }
 module.exports.loop = function () {
 	const tickTock = Memory.tickTock;

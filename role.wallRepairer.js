@@ -100,7 +100,9 @@ module.exports = {
 		}
 		// if creep is supposed to get energy
 		else {
-			creep.getEnergy(true, false);
+			if (creep.getSalvage() == -1) {
+				creep.getEnergy(true, false);
+			}
 		}
 	},
 };

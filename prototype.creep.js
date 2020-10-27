@@ -72,13 +72,19 @@ Creep.prototype.getEnergy = function (useContainer, useSource) {
 
 Creep.prototype.getSalvage = function (creep) {
 	let drops = this.room.find(FIND_DROPPED_RESOURCES, {
-		filter: (drops) => drops.resourceType === RESOURCE_ENERGY,
+		filter: (drops) =>
+			drops.resourceType === RESOURCE_ENERGY &&
+			drops.amount >= this.store.getFreeCapacity(),
 	});
 	let tombstones = this.room.find(FIND_TOMBSTONES, {
-		filter: (tombs) => tombs.store.getUsedCapacity(RESOURCE_ENERGY) > 0,
+		filter: (tombs) =>
+			tombs.store.getUsedCapacity(RESOURCE_ENERGY) >=
+			this.store.getFreeCapacity(),
 	});
 	let ruins = this.room.find(FIND_RUINS, {
-		filter: (ruins) => ruins.store.getUsedCapacity(RESOURCE_ENERGY) > 0,
+		filter: (ruins) =>
+			ruins.store.getUsedCapacity(RESOURCE_ENERGY) >=
+			this.store.getFreeCapacity(),
 	});
 
 	if (drops.length != 0) {

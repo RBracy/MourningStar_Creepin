@@ -8,6 +8,7 @@ var listOfRoles = [
 	'miner',
 	'repairer',
 	'scavenger',
+	'schlepper',
 	'upgrader',
 	'wallRepairer',
 ];
@@ -194,6 +195,9 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 				}
 				if (role == 'giver' && transferOrder != undefined) {
 					name = this.createGiver(transferTarget);
+				}
+				if (role == 'schlepper' && room.memory.linksEnabled == true) {
+					name = this.createSchlepper();
 				} else {
 					name = this.createCustomCreep(maxEnergy, role);
 				}
@@ -538,9 +542,13 @@ StructureSpawn.prototype.createLogistics = function (sourceId) {
 //Mostly deprecated as a standalone creep, but kept as the fallback role for
 // the scavenger role
 StructureSpawn.prototype.createSchlepper = function () {
-	return this.spawnCreep([MOVE, CARRY], 'schlepper_' + Game.time, {
-		memory: { role: 'schlepper', working: false, home: this.room.name },
-	});
+	return this.spawnCreep(
+		[MOVE, CARRY, CARRY, CARRY, CARRY, CARRY],
+		'schlepper_' + Game.time,
+		{
+			memory: { role: 'schlepper', working: false, home: this.room.name },
+		}
+	);
 };
 
 // Scavver (Picks up dropped energy on the ground, harvests tombstones and ruins for energy)

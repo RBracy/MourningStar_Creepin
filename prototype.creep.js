@@ -53,7 +53,8 @@ Creep.prototype.getEnergy = function (useContainer, useSource) {
 			filter: (s) =>
 				((s.structureType == STRUCTURE_LINK && s.memory.target == true) ||
 					s.structureType == STRUCTURE_CONTAINER) &&
-				s.store.getUsedCapacity(RESOURCE_ENERGY) > 0,
+				s.store.getUsedCapacity(RESOURCE_ENERGY) >
+					this.store.getFreeCapacity() / 2,
 		});
 		if (container) {
 			if (this.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {

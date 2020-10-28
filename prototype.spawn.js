@@ -191,7 +191,7 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 					name = this.createLogistics();
 				}
 				if (role == 'scavenger') {
-					name = this.createScavenger(300);
+					name = this.createScavenger(150);
 				}
 				if (role == 'giver' && transferOrder != undefined) {
 					name = this.createGiver(transferTarget);

@@ -1,3 +1,4 @@
+const roleHarvester = require('role.harvester');
 module.exports = {
 	/** @param {Creep} creep */
 	run: function (creep) {
@@ -20,7 +21,7 @@ module.exports = {
 				});
 				let storage = creep.room.storage;
 
-				if (link != undefined) {
+				if (link != undefined && storage != undefined) {
 					if (creep.pos.getRangeTo(link) < creep.pos.getRangeTo(storage)) {
 						if (creep.transfer(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
 							creep.moveTo(link);
@@ -30,10 +31,12 @@ module.exports = {
 							creep.moveTo(storage);
 						}
 					}
-				} else {
+				} else if (storage != undefined) {
 					if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
 						creep.moveTo(storage);
 					}
+				} else {
+					roleHarvester.run(creep);
 				}
 			} else {
 				let exit = creep.room.findExitTo(creep.memory.home);

@@ -80,9 +80,7 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 			// create a harvester because it can work on its own
 			name = this.createCustomCreep(room.energyAvailable, 'harvester');
 		}
-	}
-	// if no backup creep is required
-	else {
+	} else {
 		// check if all sources have miners
 		let sources = room.find(FIND_SOURCES);
 		// iterate over all sources
@@ -181,9 +179,7 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 					// delete the claim order
 					delete this.memory.claimRoom;
 				}
-			}
-			// if no claim order was found, check other roles
-			else if (numberOfCreeps[role] < this.memory.minCreeps[role]) {
+			} else if (numberOfCreeps[role] < this.memory.minCreeps[role]) {
 				if (role == 'lorry') {
 					name = this.createLorry(150);
 				}

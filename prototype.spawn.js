@@ -193,8 +193,8 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 				if (role == 'scavenger') {
 					name = this.createScavenger(150);
 				}
-				if (room.memory.transferOrder != undefined) {
-					if (role == 'giver') {
+				if (role == 'giver') {
+					if (room.memory.transferOrder != undefined) {
 						name = this.createGiver(transferTarget);
 					}
 				}

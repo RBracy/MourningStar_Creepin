@@ -194,9 +194,7 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 					name = this.createScavenger(150);
 				}
 				if (role == 'giver') {
-					if (room.memory.transferOrder != undefined) {
-						name = this.createGiver(transferTarget);
-					}
+					name = this.createGiver(transferTarget);
 				}
 				if (role == 'schlepper' && room.memory.linksEnabled == true) {
 					name = this.createSchlepper();

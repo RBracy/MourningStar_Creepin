@@ -1,5 +1,3 @@
-const roleLorry = require('role.lorry');
-
 module.exports = {
 	// a function to run the logic for this role
 	/** @param {Creep} creep */
@@ -13,7 +11,6 @@ module.exports = {
 			creep.memory.working = true;
 		}
 		if (creep.memory.working == true) {
-			let energy = 
 			let drops = [];
 			drops = drops.concat(
 				creep.room.find(FIND_DROPPED_RESOURCES),

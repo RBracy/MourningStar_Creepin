@@ -19,7 +19,7 @@ module.exports = {
 					(s.structureType == STRUCTURE_SPAWN ||
 						s.structureType == STRUCTURE_EXTENSION ||
 						s.structureType == STRUCTURE_TOWER) &&
-					s.store.getUsedCapacity(RESOURCES_ENERGY) <
+					s.store.getUsedCapacity(RESOURCE_ENERGY) <
 						s.store.getFreeCapacity(RESOURCE_ENERGY),
 			});
 

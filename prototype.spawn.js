@@ -48,7 +48,7 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 		let transferQuantity = room.memory.transferOrder.quantity;
 		if (transferQuantity <= 0) {
 			delete room.memory.transferOrder;
-			this.memory.minCreeps.givers = 0;
+			this.memory.minCreeps.giver = 0;
 		}
 	}
 
@@ -193,7 +193,7 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 				if (role == 'scavenger') {
 					name = this.createScavenger(150);
 				}
-				if (role == 'giver' && transferOrder != undefined) {
+				if (role == 'giver') {
 					name = this.createGiver(transferTarget);
 				}
 				if (role == 'schlepper' && room.memory.linksEnabled == true) {

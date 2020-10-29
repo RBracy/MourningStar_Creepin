@@ -13,13 +13,14 @@ module.exports = {
 			creep.memory.working = true;
 		}
 		if (creep.memory.working == true) {
+			let energy = 
 			let drops = [];
 			drops = drops.concat(
-				this.room.find(FIND_DROPPED_RESOURCES),
-				this.room.find(FIND_TOMBSTONES, {
+				creep.room.find(FIND_DROPPED_RESOURCES),
+				creep.room.find(FIND_TOMBSTONES, {
 					filter: (t) => t.store.getUsedCapacity() > 0,
 				}),
-				this.room.find(FIND_RUINS, {
+				creep.room.find(FIND_RUINS, {
 					filter: (r) => r.store.getUsedCapacity() > 0,
 				})
 			);

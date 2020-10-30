@@ -11,28 +11,27 @@ module.exports = {
 			creep.memory.working = true;
 		}
 		if (creep.memory.working == true) {
-			let drops = [];
-			drops = drops.concat(
-				creep.room.find(FIND_DROPPED_RESOURCES),
-				creep.room.find(FIND_TOMBSTONES, {
-					filter: (t) => t.store.getUsedCapacity() > 0,
-				}),
-				creep.room.find(FIND_RUINS, {
-					filter: (r) => r.store.getUsedCapacity() > 0,
-				})
-			);
+			let drops = creep.room.find(FIND_DROPPED_RESOURCES);
+			let tombs = creep.room.find(FIND_TOMBSTONES, {
+				filter: (t) => t.store.getUsedCapacity() > 0,
+			});
+			let ruins = creep.room.find(FIND_RUINS, {
+				filter: (r) => r.store.getUsedCapacity() > 0,
+			});
+			let salvage = [];
+			salvage = salvage.concat(drops, tombs, ruins);
 
-			if (drops.length > 0) {
-				let drop = _.max(drops, (drop) => drop.store.getUsedCapacity());
+			if (salvage.length > 0) {
+				let target = _.maxBy(salvage, _.property(store).getUsedCapacity());
 
-				if (drop instanceof RESOURCE_ENERGY) {
-					if (creep.pickup(drop) == ERR_NOT_IN_RANGE) {
-						creep.moveTo(drop);
+				if (target instanceof Resource) {
+					if (creep.pickup(target) == ERR_NOT_IN_RANGE) {
+						creep.moveTo(target);
 					}
 					return;
-				} else if (drop instanceof Tombstone || drop instanceof Ruin) {
-					if (creep.withdraw(drop, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-						creep.moveTo(drop);
+				} else if (target instanceof Tombstone || target instanceof Ruin) {
+					if (creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+						creep.moveTo(target);
 					}
 				}
 			}

@@ -567,7 +567,28 @@ StructureSpawn.prototype.createScavenger = function (energy) {
 // Giver (Transfers energy from one spawn/room to another)
 StructureSpawn.prototype.createGiver = function (transferTarget) {
 	return this.spawnCreep(
-		[MOVE, MOVE, CARRY, CARRY, CARRY, MOVE, CARRY, CARRY, CARRY, MOVE, MOVE],
+		[
+			MOVE,
+			MOVE,
+			MOVE,
+			MOVE,
+			MOVE,
+			CARRY,
+			CARRY,
+			CARRY,
+			CARRY,
+			CARRY,
+			CARRY,
+			CARRY,
+			CARRY,
+			CARRY,
+			CARRY,
+			MOVE,
+			MOVE,
+			MOVE,
+			MOVE,
+			MOVE,
+		],
 		'giver_' + Game.time,
 		{
 			memory: {

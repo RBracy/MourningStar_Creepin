@@ -71,21 +71,21 @@ Creep.prototype.getEnergy = function (useContainer, useSource) {
 	}
 };
 
-Creep.prototype.getSalvage = function (creep) {
+Creep.prototype.getSalvage = function () {
 	let drops = this.room.find(FIND_DROPPED_RESOURCES, {
 		filter: (drops) =>
 			drops.resourceType === RESOURCE_ENERGY &&
-			drops.amount >= this.store.getFreeCapacity(),
+			this.store.getFreeCapacity() / 2,
 	});
 	let tombstones = this.room.find(FIND_TOMBSTONES, {
 		filter: (tombs) =>
 			tombs.store.getUsedCapacity(RESOURCE_ENERGY) >=
-			this.store.getFreeCapacity(),
+			this.store.getFreeCapacity() / 2,
 	});
 	let ruins = this.room.find(FIND_RUINS, {
 		filter: (ruins) =>
 			ruins.store.getUsedCapacity(RESOURCE_ENERGY) >=
-			this.store.getFreeCapacity(),
+			this.store.getFreeCapacity() / 2,
 	});
 
 	if (drops.length != 0) {

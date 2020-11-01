@@ -30,6 +30,12 @@ module.exports = {
 				(d) => d.mineralType == creep.memory.mineralType
 			);
 
+			let containers = creep.room.find(FIND_STRUCTURES, {
+				filter: (s) =>
+					s.structureType == STRUCTURE_CONTAINER &&
+					s.store.getUsedCapacity(creep.memory.mineralType) > 0,
+			});
+
 			if (tombs.length != 0) {
 				let tomb = creep.pos.findClosestByRange(tombs);
 				if (
@@ -41,6 +47,13 @@ module.exports = {
 				let drop = creep.pos.findClosestByRange(drops);
 				if (creep.pickup(drop) == ERR_NOT_IN_RANGE) {
 					creep.moveTo(drop);
+				}
+			} else if (containers.length != 0) {
+				if (
+					creep.withdraw(containers[0], creep.memory.mineralType) ==
+					ERR_NOT_IN_RANGE
+				) {
+					creep.moveTo(containers[0]);
 				}
 			} else {
 				if (creep.harvest(target) == ERR_NOT_IN_RANGE) {

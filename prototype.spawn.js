@@ -1,6 +1,7 @@
 var listOfRoles = [
 	'builder',
 	'defender',
+	'extractor',
 	'giver',
 	'harvester',
 	'logistics',

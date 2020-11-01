@@ -25,13 +25,16 @@ for (let room in Game.rooms) {
 for (let spawnName in Game.spawns) {
 	if (Game.spawns[spawnName].memory.minCreeps == undefined) {
 		Game.spawns[spawnName].memory.minCreeps = {
+			builder: 0,
+			extractor: 0,
+			giver: 0,
 			harvester: 0,
 			lorry: 0,
-			scavenger: 0,
-			upgrader: 0,
-			builder: 0,
 			repairer: 0,
-			wallRepairer: 0,
+			scavenger: 0,
+			schlepper: 0,
+			upgrader: 0,
+			wallRepaier: 0,
 		};
 	}
 	if (Game.spawns[spawnName].memory.minLongDistanceHarvesters == undefined) {

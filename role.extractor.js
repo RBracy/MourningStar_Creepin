@@ -14,7 +14,6 @@ module.exports = {
 
 			if (creep.memory.depositId != undefined) {
 				target = Game.getObjectById(creep.memory.depositId);
-				var mineral = creep.memory.mineralType;
 			} else {
 				let targets = creep.room.find(FIND_MINERALS);
 				target = targets[0];
@@ -23,17 +22,19 @@ module.exports = {
 			}
 			let tombs = _.filter(
 				creep.room.find(FIND_TOMBSTONES),
-				(t) => t.store.getUsedCapacity(mineral) > 0
+				(t) => t.store.getUsedCapacity(creep.memory.mineralType) > 0
 			);
 
 			let drops = _.filter(
 				creep.room.find(FIND_DROPPED_RESOURCES),
-				(d) => d.mineralType == mineral
+				(d) => d.mineralType == creep.memory.mineralType
 			);
 
 			if (tombs.length != 0) {
 				let tomb = creep.pos.findClosestByRange(tombs);
-				if (creep.withdraw(tomb, mineral) == ERR_NOT_IN_RANGE) {
+				if (
+					creep.withdraw(tomb, creep.memory.mineralType) == ERR_NOT_IN_RANGE
+				) {
 					creep.moveTo(tomb);
 				}
 			} else if (drops.length != 0) {
@@ -51,12 +52,16 @@ module.exports = {
 			let storage = creep.room.storage;
 			if (
 				terminal != undefined &&
-				terminal.store.getUsedCapacity(mineral) < 10000
+				terminal.store.getUsedCapacity(creep.memory.mineralType) < 10000
 			) {
-				if (creep.transfer(terminal, mineral) == ERR_NOT_IN_RANGE) {
+				if (
+					creep.transfer(terminal, creep.memory.mineralType) == ERR_NOT_IN_RANGE
+				) {
 					creep.moveTo(terminal);
 				}
-			} else if (creep.transfer(storage, mineral) == ERR_NOT_IN_RANGE) {
+			} else if (
+				creep.transfer(storage, creep.memory.mineralType) == ERR_NOT_IN_RANGE
+			) {
 				creep.moveTo(storage);
 			}
 		}

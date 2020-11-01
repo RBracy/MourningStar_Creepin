@@ -173,17 +173,15 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 	if (name == undefined) {
 		for (let role of listOfRoles) {
 			// check for claim order
-			if (role == 'claimer' && this.memory.claimRoom != undefined) {
-				// try to spawn a claimer
+			if (
+				role == 'claimer' &&
+				this.memory.claimRoom != undefined &&
+				!_.some(creepsInRoom, (c) => c.memory.role == 'claimer')
+			) {
 				name = this.createClaimer(this.memory.claimRoom);
-				// if that worked
-				if (name != undefined && _.isString(name)) {
-					// delete the claim order
-					delete this.memory.claimRoom;
-				}
 			} else if (numberOfCreeps[role] < this.memory.minCreeps[role]) {
 				if (role == 'lorry') {
-					name = this.createLorry(150);
+					name = this.createLorry(300);
 				}
 				if (role == 'logistics') {
 					name = this.createLogistics();
@@ -351,7 +349,7 @@ StructureSpawn.prototype.createCustomCreep = function (energy, roleName) {
 
 	// create creep with the created body and the given role
 	return this.spawnCreep(body, roleName + '_' + Game.time, {
-		memory: { role: roleName, working: false, home: this.room.name },
+		memory: { role: roleName, working: true, home: this.room.name },
 	});
 };
 

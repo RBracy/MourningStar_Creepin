@@ -9,7 +9,7 @@ module.exports = {
 		) {
 			creep.memory.working = true;
 		}
-		if (creep.memory.working) {
+		if (creep.memory.working == true) {
 			let target;
 
 			if (creep.memory.depositId != undefined) {
@@ -20,8 +20,32 @@ module.exports = {
 				creep.memory.depositId = target.id;
 				creep.memory.mineralType = target.mineralType;
 			}
-			if (creep.harvest(target) == ERR_NOT_IN_RANGE) {
-				creep.moveTo(target);
+			let tombs = _.filter(
+				creep.room.find(FIND_TOMBSTONES),
+				(t) => t.store.getUsedCapacity(creep.memory.mineralType) > 0
+			);
+
+			let drops = _.filter(
+				creep.room.find(FIND_DROPPED_RESOURCES),
+				(d) => d.mineralType == creep.memory.mineralType
+			);
+
+			if (tombs.length != 0) {
+				let tomb = creep.pos.findClosestByRange(tombs);
+				if (
+					creep.withdraw(tomb, creep.memory.mineralType) == ERR_NOT_IN_RANGE
+				) {
+					creep.moveTo(tomb);
+				}
+			} else if (drops.length != 0) {
+				let drop = creep.pos.findClosestByRange(drops);
+				if (creep.pickup(drop) == ERR_NOT_IN_RANGE) {
+					creep.moveTo(drop);
+				}
+			} else {
+				if (creep.harvest(target) == ERR_NOT_IN_RANGE) {
+					creep.moveTo(target);
+				}
 			}
 		} else {
 			let storage = creep.room.storage;

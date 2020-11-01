@@ -1,4 +1,4 @@
-var roles = {
+const roles = {
 	harvester: require('role.harvester'),
 	upgrader: require('role.upgrader'),
 	builder: require('role.builder'),

@@ -94,7 +94,7 @@ module.exports.loop = function () {
 		(t) => t.structureType == STRUCTURE_TOWER
 	);
 	for (let tower of towers) {
-		tower.defend();
+		tower.runTower();
 	}
 
 	// run the spawns

@@ -34,6 +34,7 @@ StructureSpawn.prototype.headsUpDisplay = function (tickTock) {
 		);
 	}
 };
+
 // create a new function for StructureSpawn
 StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 	/** @type {Room} */

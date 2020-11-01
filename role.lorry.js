@@ -33,7 +33,9 @@ module.exports = {
 				}
 			}
 		} else {
-			creep.getEnergy(true, false);
+			if (creep.getSalvage() == -1) {
+				creep.getEnergy(true, false);
+			}
 		}
 	},
 };

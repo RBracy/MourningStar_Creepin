@@ -15,6 +15,13 @@ module.exports = {
 						swampCost: 2,
 					});
 				}
+			} else {
+				if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
+					creep.moveTo(source, {
+						plainCost: 1,
+						swampCost: 2,
+					});
+				}
 			}
 		} else {
 			let exit = creep.room.findExitTo(creep.memory.target);

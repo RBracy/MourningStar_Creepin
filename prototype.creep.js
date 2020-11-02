@@ -76,7 +76,7 @@ Creep.prototype.getSalvage = function () {
 	let drops = this.room.find(FIND_DROPPED_RESOURCES, {
 		filter: (drops) =>
 			drops.resourceType === RESOURCE_ENERGY &&
-			this.store.getFreeCapacity() / 2,
+			drops.amount >= this.store.getFreeCapacity() / 2,
 	});
 	let tombstones = this.room.find(FIND_TOMBSTONES, {
 		filter: (tombs) =>

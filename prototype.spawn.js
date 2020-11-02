@@ -184,9 +184,6 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 				if (role == 'lorry') {
 					name = this.createLorry(300);
 				}
-				if (role == 'logistics') {
-					name = this.createLogistics();
-				}
 				if (role == 'scavenger') {
 					name = this.createScavenger(150);
 				}

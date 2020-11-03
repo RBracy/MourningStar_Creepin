@@ -52,7 +52,7 @@ StructureTerminal.prototype.marketSell = function () {
 				let result = Game.market.deal(orders[0].id, 200, this.room.name);
 				if (result == 0) {
 					console.log('Order completed successfully');
-					quantity - 200;
+					quantity = quantity - 200;
 				}
 			}
 		}

@@ -34,11 +34,8 @@ StructureTerminal.prototype.marketSell = function () {
 				(order) =>
 					order.resourceType == saleItem &&
 					order.type == ORDER_BUY &&
-					Game.market.calcTransactionCost(
-						200,
-						spawn.room.name,
-						order.roomName
-					) < 400
+					Game.market.calcTransactionCost(200, this.room.name, order.roomName) <
+						400
 			);
 
 			console.log(saleItem + ' buy orders found: ' + orders.length);
@@ -52,7 +49,7 @@ StructureTerminal.prototype.marketSell = function () {
 			console.log('Best price: ' + orders[0].price);
 
 			if (orders[0].price >= minPrice) {
-				let result = Game.market.deal(orders[0].id, 200, spawn.room.name);
+				let result = Game.market.deal(orders[0].id, 200, this.room.name);
 				if (result == 0) {
 					console.log('Order completed successfully');
 					quantity - 200;

@@ -102,7 +102,7 @@ module.exports.loop = function () {
 	}
 
 	// run the terminals
-	if (Game.time % 12 == 0) {
+	if (Game.time % 6 == 0) {
 		var terminals = _.filter(
 			Game.structures,
 			(t) => t.structureType == STRUCTURE_TERMINAL

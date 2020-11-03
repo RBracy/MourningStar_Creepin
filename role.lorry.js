@@ -32,7 +32,8 @@ module.exports = {
 			}
 			if (
 				structure == undefined &&
-				creep.room.terminal.store.getUsedCapacity(RESOURCE_ENERGY) < 3000
+				creep.room.terminal &&
+				creep.room.terminal.memory.requisitions.energy > 0
 			) {
 				structure = creep.room.terminal;
 			}

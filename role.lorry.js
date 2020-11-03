@@ -22,7 +22,7 @@ module.exports = {
 							s.store.getCapacity(RESOURCE_ENERGY)) ||
 					(s.structureType == STRUCTURE_TOWER &&
 						s.store.getUsedCapacity(RESOURCE_ENERGY) <
-							s.store.getCapacity(RESOURCE_ENERGY) / 2),
+							s.store.getCapacity(RESOURCE_ENERGY)),
 			});
 
 			if (structure == undefined) {

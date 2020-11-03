@@ -24,7 +24,7 @@ StructureTerminal.prototype.marketSell = function () {
 	if (this.memory.sellOrder.quantity == 0) {
 		return;
 	} else if (
-		this.store.getUsedCapacity(RESOURCE_ENERGY) >= 2000 &&
+		this.store.getUsedCapacity(RESOURCE_ENERGY) >= 500 &&
 		this.store.getUsedCapacity(saleItem) >= quantity
 	) {
 		let orders = Game.market.getAllOrders(
@@ -64,7 +64,7 @@ StructureTerminal.prototype.marketBuy = function () {
 	if (this.memory.purchaseOrder.quantity == 0) {
 		return;
 	} else if (
-		this.store.getUsedCapacity(RESOURCE_ENERGY) >= 2000 &&
+		this.store.getUsedCapacity(RESOURCE_ENERGY) >= 500 &&
 		this.store.getFreeCapacity() >= quantity
 	) {
 		let orders = Game.market.getAllOrders(

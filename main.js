@@ -6,6 +6,21 @@ require('prototype.link');
 require('prototype.terminal');
 require('prototype.lab');
 
+// Global constants
+const links = _.filter(
+	Game.structures,
+	(l) => l.structureType == STRUCTURE_LINK
+);
+const towers = _.filter(
+	Game.structures,
+	(t) => t.structureType == STRUCTURE_TOWER
+);
+const terminals = _.filter(
+	Game.structures,
+	(t) => t.structureType == STRUCTURE_TERMINAL
+);
+const labs = _.filter(Game.structures, (l) => l.structureType == STRUCTURE_LAB);
+
 // Upon load or global reset, these loops check for essential memory objects
 // and creates blank entries if they don't exist.
 
@@ -53,12 +68,64 @@ for (let spawnName in Game.spawns) {
 		Game.spawns[spawnName].memory.enableHUD = false;
 	}
 }
-module.exports.loop = function () {
-	const tickTock = Memory.tickTock;
-	if (tickTock < 5) {
-		Memory.tickTock = Memory.tickTock + 1;
-	}
 
+for (let link of links) {
+	if (link.memory.source == undefined) {
+		link.memory.source = false;
+	}
+	if (link.memory.target == undefined) {
+		link.memory.target = false;
+	}
+}
+
+for (let tower of towers) {
+	if (tower.memory.repairEnabled == undefined) {
+		tower.memory.repairEnabled = false;
+	}
+}
+
+for (let terminal of terminals) {
+	if (terminal.memory.requisitions == undefined) {
+		terminal.memory.requisitions = {
+			H: 0,
+			O: 0,
+			U: 0,
+			L: 0,
+			K: 0,
+			Z: 0,
+			X: 0,
+			G: 0,
+			silicon: 0,
+			metal: 0,
+			biomass: 0,
+			mist: 0,
+			energy: 2000,
+			power: 0,
+		};
+	}
+	if (terminal.memory.sellOrder == undefined) {
+		terminal.memory.sellOrder = {
+			itemType: '',
+			minPrice: 0,
+			quantity: 0,
+		};
+	}
+	if (terminal.memory.purchaseOrder == undefined) {
+		terminal.memory.purchaseOrder = {
+			itemType: '',
+			maxPrice: 0,
+			quantity: 0,
+		};
+	}
+}
+
+for (let lab of labs) {
+	if (lab.memory.enabled == undefined) {
+		lab.memory.enabled = false;
+	}
+}
+
+module.exports.loop = function () {
 	// clear the memory of dead creeps
 	for (let name in Memory.creeps) {
 		if (Game.creeps[name] == undefined) {
@@ -75,10 +142,6 @@ module.exports.loop = function () {
 	}
 
 	// run the links
-	var links = _.filter(
-		Game.structures,
-		(l) => l.structureType == STRUCTURE_LINK
-	);
 	for (let link of links) {
 		link.doWork();
 	}
@@ -89,10 +152,6 @@ module.exports.loop = function () {
 	}
 
 	// run the towers
-	var towers = _.filter(
-		Game.structures,
-		(t) => t.structureType == STRUCTURE_TOWER
-	);
 	for (let tower of towers) {
 		tower.runTower();
 	}
@@ -105,10 +164,6 @@ module.exports.loop = function () {
 
 	// run the terminals
 	if (Game.time % 6 == 0) {
-		var terminals = _.filter(
-			Game.structures,
-			(t) => t.structureType == STRUCTURE_TERMINAL
-		);
 		for (let terminal of terminals) {
 			terminal.marketSell();
 			terminal.marketBuy();
@@ -116,7 +171,6 @@ module.exports.loop = function () {
 	}
 
 	// run the labs
-	var labs = _.filter(Game.structures, (l) => l.structureType == STRUCTURE_LAB);
 	for (let lab of labs) {
 		lab.doScience();
 	}

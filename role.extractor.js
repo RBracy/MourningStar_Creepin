@@ -65,12 +65,17 @@ module.exports = {
 			let storage = creep.room.storage;
 			if (
 				terminal != undefined &&
-				terminal.store.getUsedCapacity(creep.memory.mineralType) < 10000
+				terminal.memory.requisitions[creep.memory.mineralType] > 0
 			) {
-				if (
-					creep.transfer(terminal, creep.memory.mineralType) == ERR_NOT_IN_RANGE
-				) {
-					creep.moveTo(terminal);
+				switch (creep.transfer(terminal, creep.memory.mineralType)) {
+					case 0:
+						terminal.memory.requisitions[
+							creep.memory.mineralType
+						] -= creep.store.getCapacity();
+						break;
+					case -9:
+						creep.moveTo(terminal);
+						break;
 				}
 			} else if (
 				creep.transfer(storage, creep.memory.mineralType) == ERR_NOT_IN_RANGE

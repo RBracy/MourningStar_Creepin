@@ -6,8 +6,8 @@ module.exports = {
 				creep.moveTo(target);
 			}
 		} else {
-			if (creep.pos.getRangeTo(controller) > 6) {
-				creep.moveTo(controller), { plainCost: 1, swampCost: 2 };
+			if (creep.pos.getRangeTo(creep.room.controller) > 6) {
+				creep.moveTo(creep.room.controller), { plainCost: 1, swampCost: 2 };
 			}
 		}
 	},

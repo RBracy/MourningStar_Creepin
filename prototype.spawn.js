@@ -186,6 +186,9 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 			) {
 				delete Memory.spawns[this.name].claimRoom;
 			} else if (numberOfCreeps[role] < this.memory.minCreeps[role]) {
+				if (role == 'defender') {
+					name = this.createDefender();
+				}
 				if (role == 'lorry') {
 					name = this.createLorry(300);
 				}
@@ -411,6 +414,32 @@ StructureSpawn.prototype.createClaimer = function (target) {
 	return this.spawnCreep([CLAIM, MOVE], 'claimer_' + Game.time, {
 		memory: { role: 'claimer', target: target, home: this.room.name },
 	});
+};
+
+// Defender (Basic melee with lots of tough parts to defend new spawns while
+//	defenses are being established)
+StructureSpawn.prototype.createDefender = function () {
+	return this.spawnCreep(
+		[
+			TOUGH,
+			TOUGH,
+			TOUGH,
+			TOUGH,
+			TOUGH,
+			TOUGH,
+			TOUGH,
+			TOUGH,
+			TOUGH,
+			TOUGH,
+			TOUGH,
+			TOUGH,
+			MOVE,
+			MOVE,
+			ATTACK,
+		],
+		'defender_' + Game.time,
+		{ memory: { role: 'defender', home: this.room.name } }
+	);
 };
 
 // Invader (Basic melee attacker I send in to clear invader

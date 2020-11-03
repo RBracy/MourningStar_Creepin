@@ -16,8 +16,8 @@ var listOfRoles = [
 ];
 
 // a "Heads-up-display" that will give a readout of important stats, every 6 ticks (30s)
-StructureSpawn.prototype.headsUpDisplay = function (tickTock) {
-	if (tickTock >= 5 && this.memory.enableHUD == true) {
+StructureSpawn.prototype.headsUpDisplay = function () {
+	if (Game.time % 6 == 0 && this.memory.enableHUD == true) {
 		let storage = this.room.storage;
 		console.log(
 			'***** {' +

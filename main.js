@@ -3,12 +3,10 @@ require('prototype.creep');
 require('prototype.tower');
 require('prototype.spawn');
 require('prototype.link');
+require('prototype.terminal');
 
 // Upon load or global reset, these loops check for essential memory objects
 // and creates blank entries if they don't exist.
-if (Memory.tickTock == undefined) {
-	Memory.tickTock = 0;
-}
 
 for (let room in Game.rooms) {
 	if (Game.rooms[room].memory.logisticsEnabled == undefined) {
@@ -100,10 +98,17 @@ module.exports.loop = function () {
 	// run the spawns
 	for (let spawnName in Game.spawns) {
 		Game.spawns[spawnName].spawnCreepsIfNecessary();
-		Game.spawns[spawnName].headsUpDisplay(tickTock);
+		Game.spawns[spawnName].headsUpDisplay();
 	}
 
-	if (tickTock >= 5) {
-		Memory.tickTock = 0;
+	// run the terminals
+	if (Game.time % 12 == 0) {
+		var terminals = _.filter(
+			Game.structures,
+			(t) => t.structureType == STRUCTURE_TERMINAL
+		);
+		for (let terminal of terminals) {
+			terminal.marketSell();
+		}
 	}
 };

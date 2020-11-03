@@ -16,10 +16,12 @@ module.exports = {
 		if (creep.memory.working == true) {
 			var structure = creep.pos.findClosestByRange(FIND_MY_STRUCTURES, {
 				filter: (s) =>
-					(s.structureType == STRUCTURE_SPAWN ||
+					((s.structureType == STRUCTURE_SPAWN ||
 						s.structureType == STRUCTURE_EXTENSION) &&
-					s.store.getUsedCapacity(RESOURCE_ENERGY) <
-						s.store.getCapacity(RESOURCE_ENERGY),
+						s.store.getUsedCapacity(RESOURCE_ENERGY) <
+							s.store.getCapacity(RESOURCE_ENERGY)) ||
+					(s.structureType == STRUCTURE_TERMINAL &&
+						s.store.getUsedCapacity(RESOURCE_ENERGY) < 3000),
 			});
 
 			if (structure == undefined) {

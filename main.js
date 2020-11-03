@@ -126,6 +126,23 @@ for (let lab of labs) {
 }
 
 module.exports.loop = function () {
+	// Global constants
+	const links = _.filter(
+		Game.structures,
+		(l) => l.structureType == STRUCTURE_LINK
+	);
+	const towers = _.filter(
+		Game.structures,
+		(t) => t.structureType == STRUCTURE_TOWER
+	);
+	const terminals = _.filter(
+		Game.structures,
+		(t) => t.structureType == STRUCTURE_TERMINAL
+	);
+	const labs = _.filter(
+		Game.structures,
+		(l) => l.structureType == STRUCTURE_LAB
+	);
 	// clear the memory of dead creeps
 	for (let name in Memory.creeps) {
 		if (Game.creeps[name] == undefined) {

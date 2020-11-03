@@ -4,6 +4,7 @@ require('prototype.tower');
 require('prototype.spawn');
 require('prototype.link');
 require('prototype.terminal');
+require('prototype.lab');
 
 // Upon load or global reset, these loops check for essential memory objects
 // and creates blank entries if they don't exist.

@@ -53,6 +53,7 @@ StructureTerminal.prototype.marketSell = function () {
 				if (result == 0) {
 					console.log('Order completed successfully');
 					this.memory.sellOrder.quantity -= 200;
+					console.log(quantity + ' units remaining in current sell order');
 				}
 			}
 		}

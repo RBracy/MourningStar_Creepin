@@ -113,4 +113,10 @@ module.exports.loop = function () {
 			terminal.marketBuy();
 		}
 	}
+
+	// run the labs
+	var labs = _.filter(Game.structures, (l) => l.structureType == STRUCTURE_LAB);
+	for (let lab of labs) {
+		lab.doScience();
+	}
 };

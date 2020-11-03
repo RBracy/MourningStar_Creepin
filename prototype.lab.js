@@ -17,6 +17,11 @@ Object.defineProperty(StructureLab.prototype, 'memory', {
 });
 
 // create a new function for StructureLink
-StructureLab.prototype.doWork = function () {
+StructureLab.prototype.doScience = function () {
 	// Stuff will go in here to make the labs do what they do, eventually.
+	if (this.memory.enabled == undefined) {
+		this.memory.enabled = false;
+	}
+	console.log('Muthafuckin SCIENCE!');
+	return;
 };

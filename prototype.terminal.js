@@ -22,7 +22,7 @@ StructureTerminal.prototype.marketSell = function () {
 	} else {
 		const saleItem = this.memory.sellOrder.itemType;
 		const minPrice = this.memory.sellOrder.minPrice;
-		var quantity = this.memory.sellOrder.quantity;
+		const quantity = this.memory.sellOrder.quantity;
 
 		if (this.memory.sellOrder.quantity == 0) {
 			return;
@@ -52,7 +52,7 @@ StructureTerminal.prototype.marketSell = function () {
 				let result = Game.market.deal(orders[0].id, 200, this.room.name);
 				if (result == 0) {
 					console.log('Order completed successfully');
-					quantity = quantity - 200;
+					quantity - 200;
 				}
 			}
 		}

@@ -22,6 +22,5 @@ StructureLab.prototype.doScience = function () {
 	if (this.memory.enabled == undefined) {
 		this.memory.enabled = false;
 	}
-	console.log('Muthafuckin SCIENCE!');
 	return;
 };

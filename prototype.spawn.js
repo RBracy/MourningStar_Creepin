@@ -184,7 +184,7 @@ StructureSpawn.prototype.spawnCreepsIfNecessary = function () {
 				this.memory.claimRoom != undefined &&
 				_.some(creepsInRoom, (c) => c.memory.role == 'claimer')
 			) {
-				delete Memory.spawns[this].claimRoom;
+				delete Memory.spawns[this.name].claimRoom;
 			} else if (numberOfCreeps[role] < this.memory.minCreeps[role]) {
 				if (role == 'lorry') {
 					name = this.createLorry(300);

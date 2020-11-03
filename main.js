@@ -109,6 +109,7 @@ module.exports.loop = function () {
 		);
 		for (let terminal of terminals) {
 			terminal.marketSell();
+			terminal.marketBuy();
 		}
 	}
 };

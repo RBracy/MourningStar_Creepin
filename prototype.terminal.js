@@ -59,3 +59,47 @@ StructureTerminal.prototype.marketSell = function () {
 		}
 	}
 };
+
+StructureTerminal.prototype.marketBuy = function () {
+	if (this.memory.purchaseOrder == undefined) {
+		this.memory.purchaseOrder = { itemType: '', maxPrice: 0, quantity: 0 };
+	} else {
+		const purchaseItem = this.memory.purchaseOrder.itemType;
+		const maxPrice = this.memory.purchaseOrder.maxPrice;
+		var quantity = this.memory.purchaseOrder.quantity;
+
+		if (this.memory.purchaseOrder.quantity == 0) {
+			return;
+		} else if (
+			this.store.getUsedCapacity(RESOURCE_ENERGY) >= 2000 &&
+			this.store.getFreeCapacity() >= quantity
+		) {
+			let orders = Game.market.getAllOrders(
+				(order) =>
+					order.resourceType == purchaseItem &&
+					order.type == ORDER_SELL &&
+					Game.market.calcTransactionCost(200, this.room.name, order.roomName) <
+						400
+			);
+
+			console.log(purchaseItem + ' sell orders found: ' + orders.length);
+			if (orders.length == 0) {
+				return;
+			}
+
+			orders.sort(function (a, b) {
+				return a.price - b.price;
+			});
+			console.log('Best price: ' + orders[0].price);
+
+			if (orders[0].price <= maxPrice) {
+				let result = Game.market.deal(orders[0].id, 200, this.room.name);
+				if (result == 0) {
+					console.log('Order completed successfully');
+					this.memory.purchaseOrder.quantity -= 200;
+					console.log(quantity + ' units remaining in current purchase order');
+				}
+			}
+		}
+	}
+};

@@ -30,6 +30,16 @@ module.exports = {
 							s.store.getCapacity(RESOURCE_ENERGY),
 				});
 			}
+
+			if (structure == undefined) {
+				structure = creep.pos.findClosestByRange(FIND_MY_STRUCTURES, {
+					filter: (l) =>
+						l.structureType == STRUCTURE_LAB &&
+						l.store.getUsedCapacity(RESOURCE_ENERGY) <
+							l.store.getCapacity(RESOURCE_ENERGY),
+				});
+			}
+
 			if (
 				structure == undefined &&
 				creep.room.terminal &&

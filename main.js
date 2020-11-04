@@ -49,7 +49,7 @@ for (let spawnName in Game.spawns) {
 			scavenger: 0,
 			schlepper: 0,
 			upgrader: 2,
-			wallRepaier: 0,
+			wallRepairer: 0,
 		};
 	}
 	if (Game.spawns[spawnName].memory.minLongDistanceHarvesters == undefined) {

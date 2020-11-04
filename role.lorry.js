@@ -43,7 +43,7 @@ module.exports = {
 			if (
 				structure == undefined &&
 				creep.room.terminal &&
-				creep.room.terminal.memory.requisitions.energy > 0
+				creep.room.terminal.memory.requisitions[energy] > 0
 			) {
 				structure = creep.room.terminal;
 			}
@@ -54,7 +54,9 @@ module.exports = {
 			if (structure != undefined && structure === creep.room.terminal) {
 				switch (creep.transfer(structure, RESOURCE_ENERGY)) {
 					case 0:
-						creep.room.terminal.memory.requisitions.energy -= creep.store.getCapacity();
+						creep.room.terminal.memory.requisitions[
+							energy
+						] -= creep.store.getCapacity();
 						break;
 					case -9:
 						creep.moveTo(structure);

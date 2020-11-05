@@ -67,6 +67,7 @@ module.exports = {
 			var resource = creep.memory.resourceType;
 			if (
 				terminal.memory.requisitions['energy'] <= 0 &&
+				creep.memory.resourceType == undefined &&
 				creep.store.getUsedCapacity(RESOURCE_ENERGY) > 0
 			) {
 				switch (creep.transfer(storage, RESOURCE_ENERGY)) {

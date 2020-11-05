@@ -65,21 +65,7 @@ module.exports = {
 			}
 		} else {
 			var resource = creep.memory.resourceType;
-			if (
-				terminal.memory.requisitions['energy'] > 0 &&
-				creep.store.getUsedCapacity(RESOURCE_ENERGY) > 0
-			) {
-				switch (creep.transfer(storage, RESOURCE_ENERGY)) {
-					case OK:
-						break;
-					case ERR_NOT_IN_RANGE:
-						creep.moveTo(storage);
-						break;
-				}
-			} else if (
-				resource != undefined &&
-				creep.store.getUsedCapacity(resource) > 0
-			) {
+			if (resource != undefined && creep.store.getUsedCapacity(resource) > 0) {
 				switch (creep.transfer(terminal, resource)) {
 					case OK:
 						terminal.memory.requisitions[resource] -= creep.store.getCapacity();

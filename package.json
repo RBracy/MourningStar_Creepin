@@ -1,3 +1,7 @@
 {
-	"prettier": "@azz/prettier-config"
+	"prettier": "@azz/prettier-config",
+	"dependencies": {
+		"@types/lodash": "^4.14.200",
+		"@types/screeps": "^3.3.5"
+	}
 }

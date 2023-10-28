@@ -48,7 +48,7 @@ for (let spawnName in Game.spawns) {
 			repairer: 0,
 			scavenger: 0,
 			schlepper: 0,
-			upgrader: 2,
+			upgrader: 4,
 			wallRepairer: 0,
 		};
 	}

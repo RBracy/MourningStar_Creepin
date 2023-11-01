@@ -180,7 +180,7 @@ module.exports.loop = function () {
 	}
 
 	// run the terminals
-	if (Game.time % 6 == 0) {
+	if (Game.time % 6 === 0) {
 		for (let terminal of terminals) {
 			terminal.marketSell();
 			terminal.marketBuy();

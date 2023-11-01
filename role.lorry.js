@@ -19,7 +19,7 @@ module.exports = {
 					(s.structureType == STRUCTURE_SPAWN ||
 						s.structureType == STRUCTURE_EXTENSION) &&
 					s.store.getUsedCapacity(RESOURCE_ENERGY) <
-						s.store.getCapacity(RESOURCE_ENERGY),
+					s.store.getCapacity(RESOURCE_ENERGY),
 			});
 
 			if (structure == undefined) {
@@ -47,9 +47,10 @@ module.exports = {
 			) {
 				structure = creep.room.terminal;
 			}
-			if (structure == undefined) {
-				structure = creep.room.storage;
-			}
+			//Pretty sure this was causing my lorries to constantly withdraw and redeposit energy from storage if they had no other work to do.
+			//if (structure == undefined) {
+			//	structure = creep.room.storage;
+			//}
 
 			if (structure != undefined && structure === creep.room.terminal) {
 				switch (creep.transfer(structure, RESOURCE_ENERGY)) {

@@ -1,4 +1,4 @@
-var listOfRoles = [
+const listOfRoles = [
 	'builder',
 	'claimer',
 	'defender',

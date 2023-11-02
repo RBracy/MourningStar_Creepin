@@ -50,8 +50,7 @@ module.exports = {
 				}
 			} else if (containers.length != 0) {
 				if (
-					creep.withdraw(containers[0], creep.memory.mineralType) ==
-					ERR_NOT_IN_RANGE
+					creep.withdraw(containers[0], creep.memory.mineralType) == ERR_NOT_IN_RANGE
 				) {
 					creep.moveTo(containers[0]);
 				}

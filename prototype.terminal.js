@@ -15,6 +15,24 @@ Object.defineProperty(StructureTerminal.prototype, 'memory', {
 	enumerable: false,
 	configurable: true,
 });
+if (this.memory.requisitions == undefined) {
+	this.memory.requisitions = {
+		H: 0,
+		O: 0,
+		U: 0,
+		L: 0,
+		K: 0,
+		Z: 0,
+		X: 0,
+		G: 0,
+		silicon: 0,
+		metal: 0,
+		biomass: 0,
+		mist: 0,
+		energy: 2000,
+		power: 0,
+	};
+}
 
 StructureTerminal.prototype.marketSell = function () {
 	const saleItem = this.memory.sellOrder.itemType;

@@ -37,7 +37,7 @@ module.exports = {
 		}
 
 		if (creep.memory.working == false) {
-			if (link[0].store.getUsedCapacity(RESOURCE_ENERGY) > 0) {
+			if (link[0] != undefined && link[0].store.getUsedCapacity(RESOURCE_ENERGY) > 0) {
 				switch (creep.withdraw(link[0], RESOURCE_ENERGY)) {
 					case OK:
 						creep.memory.working = true;

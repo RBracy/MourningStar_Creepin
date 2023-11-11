@@ -37,7 +37,7 @@ module.exports = {
 		}
 
 		if (creep.memory.working == false) {
-			if (link != undefined && link[0].store.getUsedCapacity(RESOURCE_ENERGY) > 0) {
+		/**	if (link[0].store.getUsedCapacity(RESOURCE_ENERGY) > 0) {
 				switch (creep.withdraw(link[0], RESOURCE_ENERGY)) {
 					case OK:
 						creep.memory.working = true;
@@ -46,7 +46,7 @@ module.exports = {
 						creep.moveTo(link[0]);
 						break;
 				}
-			} else {
+			} else { */
 				for (let resType of requisitions) {
 					if (
 						terminal.memory.requisitions[resType] > 0 &&

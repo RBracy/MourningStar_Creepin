@@ -37,16 +37,18 @@ module.exports = {
 		}
 
 		if (creep.memory.working == false) {
-		/**	if (link[0].store.getUsedCapacity(RESOURCE_ENERGY) > 0) {
-				switch (creep.withdraw(link[0], RESOURCE_ENERGY)) {
-					case OK:
-						creep.memory.working = true;
-						break;
-					case ERR_NOT_IN_RANGE:
-						creep.moveTo(link[0]);
-						break;
+			if (link != undefined) {
+				if (link[0].store.getUsedCapacity(RESOURCE_ENERGY) > 0) {
+					switch (creep.withdraw(link[0], RESOURCE_ENERGY)) {
+						case OK:
+							creep.memory.working = true;
+							break;
+						case ERR_NOT_IN_RANGE:
+							creep.moveTo(link[0]);
+							break;
+					}
 				}
-			} else { */
+			} else {
 				for (let resType of requisitions) {
 					if (
 						terminal.memory.requisitions[resType] > 0 &&
